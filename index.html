@@ -697,6 +697,79 @@
       }
     }
 
+
+    .code-card{
+      width:min(470px,calc(100vw - 32px));
+      padding:25px;
+    }
+
+    .code-card h2{
+      margin:6px 0 17px;
+    }
+
+    .current-code{
+      display:block;
+      width:100%;
+      padding:13px 14px;
+      margin-bottom:10px;
+      border:1px solid rgba(87,62,83,.12);
+      border-radius:15px;
+      background:rgba(246,235,246,.78);
+      color:#493b47;
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:17px;
+      font-weight:800;
+      letter-spacing:.06em;
+      text-align:center;
+      overflow-wrap:anywhere;
+    }
+
+    .code-actions{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .code-divider{
+      height:1px;
+      margin:19px 0;
+      background:rgba(78,56,75,.1);
+    }
+
+    .code-input-row{
+      display:flex;
+      gap:8px;
+    }
+
+    .code-input{
+      min-width:0;
+      flex:1;
+      border:1px solid rgba(87,62,83,.16);
+      border-radius:13px;
+      padding:10px 12px;
+      background:#fff;
+      color:var(--ink);
+      outline:none;
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      text-transform:uppercase;
+    }
+
+    .code-input:focus{
+      border-color:rgba(216,111,159,.65);
+      box-shadow:0 0 0 3px rgba(216,111,159,.1);
+    }
+
+    .code-close{
+      margin-top:14px;
+    }
+
+    @media(max-width:520px){
+      .code-input-row{
+        flex-direction:column;
+      }
+    }
+
     .modal{
       position:fixed;
       inset:0;
@@ -788,9 +861,12 @@
 
       <div class="controls">
         <button class="btn primary" id="newGameBtn">Новая игра</button>
+        <button class="btn" id="dailyGameBtn">☀ Ежедневная</button>
+        <button class="btn" id="dealCodeBtn"># Код раскладки</button>
+        <button class="btn" id="autoCompleteBtn" disabled>Автозавершить</button>
         <button class="btn" id="undoBtn">↶ Отменить</button>
         <button class="btn" id="hintBtn">✦ Подсказка</button>
-<button class="btn" id="helpBtn">Правила</button>
+        <button class="btn" id="helpBtn">Правила</button>
       </div>
 
       <div class="stats">
@@ -820,7 +896,7 @@
   <div class="modal" id="difficultyModal">
     <div class="modal-card difficulty-card">
       <div class="big">🕷️</div>
-      <h2>Выбери сложность</h2>
+      <h2 id="difficultyTitle">Выбери сложность</h2>
       <div class="difficulty-options">
         <button class="difficulty-option" type="button" data-difficulty="easy">
           <span class="difficulty-symbols heart">♥</span>
@@ -841,6 +917,36 @@
       <div class="difficulty-footer">
         <button class="btn" type="button" id="difficultyCancelBtn">Вернуться к игре</button>
       </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="dealCodeModal">
+    <div class="modal-card code-card">
+      <div class="big">#</div>
+      <h2>Код раскладки</h2>
+
+      <output class="current-code" id="currentDealCode">—</output>
+      <div class="code-actions">
+        <button class="btn primary" type="button" id="copyDealCodeBtn">Скопировать</button>
+      </div>
+
+      <div class="code-divider"></div>
+
+      <div class="code-input-row">
+        <input
+          class="code-input"
+          id="dealCodeInput"
+          type="text"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="MY-M-0000000"
+          aria-label="Код раскладки"
+        >
+        <button class="btn primary" type="button" id="playDealCodeBtn">Играть</button>
+      </div>
+
+      <button class="btn code-close" type="button" id="closeDealCodeBtn">Закрыть</button>
     </div>
   </div>
 
@@ -867,6 +973,9 @@
         <li>Полная последовательность одной масти от короля до туза автоматически убирается с поля.</li>
         <li>Пустой столбец можно заполнить любой картой или собранной серией.</li>
         <li>Новый ряд нельзя раздать, пока хотя бы один столбец пуст.</li>
+        <li>Автозавершение доступно, когда колода закончилась и все оставшиеся карты открыты.</li>
+        <li>Ежедневная раскладка одинакова для всех игроков на выбранной сложности.</li>
+        <li>Код раскладки позволяет повторить ту же самую партию.</li>
       </ul>
       <p style="color:#7c6d79">Управление: нажми на карту или серию, затем — на столбец назначения. Также работает перетаскивание мышью.</p>
       <button class="btn primary" id="closeHelpBtn">Понятно</button>
@@ -902,6 +1011,10 @@
   let victoryAnimationToken = 0;
   let currentDifficulty = localStorage.getItem('miyeonSpiderDifficulty') || 'medium';
   let hasStartedGame = false;
+  let pendingStartMode = 'random';
+  let currentGameKind = 'random';
+  let currentSeed = 0;
+  let currentDealCode = '';
 
   const el = {
     game: document.getElementById('game'),
@@ -919,10 +1032,127 @@
     help: document.getElementById('helpModal'),
     difficulty: document.getElementById('difficultyModal'),
     difficultyCancel: document.getElementById('difficultyCancelBtn'),
-    modeLabel: document.getElementById('modeLabel')
+    difficultyTitle: document.getElementById('difficultyTitle'),
+    modeLabel: document.getElementById('modeLabel'),
+    dailyGame: document.getElementById('dailyGameBtn'),
+    dealCode: document.getElementById('dealCodeBtn'),
+    autoComplete: document.getElementById('autoCompleteBtn'),
+    codeModal: document.getElementById('dealCodeModal'),
+    currentCode: document.getElementById('currentDealCode'),
+    codeInput: document.getElementById('dealCodeInput'),
+    copyCode: document.getElementById('copyDealCodeBtn'),
+    playCode: document.getElementById('playDealCodeBtn'),
+    closeCode: document.getElementById('closeDealCodeBtn')
   };
 
-  function buildDeck(difficulty = currentDifficulty) {
+  const DIFFICULTY_LETTERS = {
+    easy: 'E',
+    medium: 'M',
+    hard: 'H'
+  };
+
+  const LETTER_DIFFICULTIES = {
+    E: 'easy',
+    M: 'medium',
+    H: 'hard'
+  };
+
+  function hashString32(value) {
+    let hash = 2166136261;
+
+    for (let i = 0; i < value.length; i++) {
+      hash ^= value.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+
+    return hash >>> 0;
+  }
+
+  function createSeededRandom(seed) {
+    let value = seed >>> 0;
+
+    return () => {
+      value = (value + 0x6D2B79F5) >>> 0;
+      let t = value;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function makeRandomSeed() {
+    try {
+      const values = new Uint32Array(1);
+      crypto.getRandomValues(values);
+      return values[0] >>> 0;
+    } catch {
+      return Math.floor(Math.random() * 4294967296) >>> 0;
+    }
+  }
+
+  function utcDateKey() {
+    return new Date().toISOString().slice(0, 10).replaceAll('-', '');
+  }
+
+  function seedForDaily(dateKey, difficulty) {
+    return hashString32(`MIYEON-DAILY-${dateKey}-${difficulty}`);
+  }
+
+  function formatRandomDealCode(difficulty, seed) {
+    const letter = DIFFICULTY_LETTERS[difficulty] || 'M';
+    const encodedSeed = (seed >>> 0).toString(36).toUpperCase().padStart(7, '0');
+    return `MY-${letter}-${encodedSeed}`;
+  }
+
+  function formatDailyDealCode(difficulty, dateKey) {
+    const letter = DIFFICULTY_LETTERS[difficulty] || 'M';
+    return `MYD-${letter}-${dateKey}`;
+  }
+
+  function parseDealCode(rawCode) {
+    const code = String(rawCode || '').trim().toUpperCase();
+
+    let match = code.match(/^MY-([EMH])-([0-9A-Z]{1,7})$/);
+    if (match) {
+      const seed = Number.parseInt(match[2], 36);
+      if (!Number.isFinite(seed) || seed < 0 || seed > 0xFFFFFFFF) return null;
+
+      return {
+        difficulty: LETTER_DIFFICULTIES[match[1]],
+        seed: seed >>> 0,
+        code: formatRandomDealCode(LETTER_DIFFICULTIES[match[1]], seed),
+        gameKind: 'code'
+      };
+    }
+
+    match = code.match(/^MYD-([EMH])-(\d{8})$/);
+    if (match) {
+      const dateKey = match[2];
+      const year = Number(dateKey.slice(0, 4));
+      const month = Number(dateKey.slice(4, 6));
+      const day = Number(dateKey.slice(6, 8));
+      const testDate = new Date(Date.UTC(year, month - 1, day));
+
+      const validDate =
+        testDate.getUTCFullYear() === year &&
+        testDate.getUTCMonth() === month - 1 &&
+        testDate.getUTCDate() === day;
+
+      if (!validDate) return null;
+
+      const difficulty = LETTER_DIFFICULTIES[match[1]];
+      return {
+        difficulty,
+        seed: seedForDaily(dateKey, difficulty),
+        code: formatDailyDealCode(difficulty, dateKey),
+        gameKind: 'daily'
+      };
+    }
+
+    return null;
+  }
+
+  function buildDeck(difficulty = currentDifficulty, seed = currentSeed) {
     const deck = [];
     let id = 0;
     let suits = ['H', 'S'];
@@ -944,12 +1174,12 @@
       }
     }
 
-    return shuffle(deck);
+    return shuffle(deck, createSeededRandom(seed));
   }
 
-  function shuffle(array) {
+  function shuffle(array, random = Math.random) {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
@@ -963,7 +1193,13 @@
 
   function updateDifficultyUI() {
     if (el.modeLabel) {
-      el.modeLabel.textContent = `Miyeon Spider Solitaire · ${difficultyName()}`;
+      const kindLabel =
+        currentGameKind === 'daily' ? ' · Ежедневная' :
+        currentGameKind === 'code' ? ' · По коду' :
+        '';
+
+      el.modeLabel.textContent =
+        `Miyeon Spider Solitaire · ${difficultyName()}${kindLabel}`;
     }
 
     document.querySelectorAll('.difficulty-option').forEach(button => {
@@ -971,10 +1207,21 @@
       button.classList.toggle('active', active);
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
+
+    if (el.currentCode) {
+      el.currentCode.textContent = currentDealCode || '—';
+    }
   }
 
-  function openDifficultySelector(initial = false) {
+  function openDifficultySelector(initial = false, mode = 'random') {
+    pendingStartMode = mode === 'daily' ? 'daily' : 'random';
     updateDifficultyUI();
+
+    if (el.difficultyTitle) {
+      el.difficultyTitle.textContent =
+        pendingStartMode === 'daily' ? 'Ежедневная раскладка' : 'Выбери сложность';
+    }
+
     el.difficultyCancel.style.display = initial || !hasStartedGame ? 'none' : '';
     el.difficulty.classList.add('show');
   }
@@ -983,14 +1230,46 @@
     el.difficulty.classList.remove('show');
   }
 
-  function startNewGame(difficulty = currentDifficulty) {
-    currentDifficulty = ['easy', 'medium', 'hard'].includes(difficulty) ? difficulty : 'medium';
+  function startNewGame(difficulty = currentDifficulty, options = {}) {
+    currentDifficulty = ['easy', 'medium', 'hard'].includes(difficulty)
+      ? difficulty
+      : 'medium';
+
+    const requestedKind = options.gameKind || pendingStartMode || 'random';
+
+    if (Number.isInteger(options.seed)) {
+      currentSeed = options.seed >>> 0;
+    } else if (requestedKind === 'daily') {
+      const dateKey = options.dateKey || utcDateKey();
+      currentSeed = seedForDaily(dateKey, currentDifficulty);
+    } else {
+      currentSeed = makeRandomSeed();
+    }
+
+    currentGameKind =
+      requestedKind === 'daily' ? 'daily' :
+      requestedKind === 'code' ? 'code' :
+      'random';
+
+    if (options.code) {
+      currentDealCode = options.code;
+    } else if (currentGameKind === 'daily') {
+      currentDealCode = formatDailyDealCode(
+        currentDifficulty,
+        options.dateKey || utcDateKey()
+      );
+    } else {
+      currentDealCode = formatRandomDealCode(currentDifficulty, currentSeed);
+    }
+
+    pendingStartMode = 'random';
     localStorage.setItem('miyeonSpiderDifficulty', currentDifficulty);
     updateDifficultyUI();
     closeDifficultySelector();
+    el.codeModal.classList.remove('show');
     stopVictoryAnimation();
     clearDragPreview();
-    const deck = buildDeck(currentDifficulty);
+    const deck = buildDeck(currentDifficulty, currentSeed);
     tableau = Array.from({length:10}, () => []);
     stock = [];
     completed = 0;
@@ -1026,7 +1305,17 @@
   }
 
   function snapshot() {
-    undoStack.push(JSON.stringify({tableau, stock, completed, moves, seconds, difficulty:currentDifficulty}));
+    undoStack.push(JSON.stringify({
+      tableau,
+      stock,
+      completed,
+      moves,
+      seconds,
+      difficulty:currentDifficulty,
+      seed:currentSeed,
+      dealCode:currentDealCode,
+      gameKind:currentGameKind
+    }));
     if (undoStack.length > 100) undoStack.shift();
   }
 
@@ -1039,6 +1328,9 @@
     moves = state.moves;
     seconds = state.seconds;
     currentDifficulty = state.difficulty || currentDifficulty;
+    currentSeed = Number.isInteger(state.seed) ? state.seed >>> 0 : currentSeed;
+    currentDealCode = state.dealCode || currentDealCode;
+    currentGameKind = state.gameKind || currentGameKind;
     updateDifficultyUI();
     selected = null;
     render();
@@ -1705,10 +1997,47 @@
     lastCompletedSlot = -1;
   }
 
+
+  function canAutoComplete() {
+    const remainingCards = tableau.reduce((sum, pile) => sum + pile.length, 0);
+
+    return (
+      completed < 8 &&
+      remainingCards > 0 &&
+      stock.length === 0 &&
+      tableau.every(pile => pile.every(card => card.faceUp))
+    );
+  }
+
+  function updateActionButtons() {
+    const available = canAutoComplete();
+    el.autoComplete.disabled = !available;
+    el.autoComplete.title = available
+      ? 'Завершить открытую концовку'
+      : 'Сначала открой все карты и закончи колоду';
+  }
+
+  function autoCompleteGame() {
+    if (!canAutoComplete()) {
+      showToast('Автозавершение пока недоступно');
+      return;
+    }
+
+    snapshot();
+    tableau = Array.from({length:10}, () => []);
+    completed = 8;
+    moves++;
+    selected = null;
+    render();
+    persist();
+    winGame();
+  }
+
   function updateStats() {
     el.moves.textContent = moves;
     el.time.textContent = formatTime(seconds);
     el.sets.textContent = `${completed} / 8`;
+    updateActionButtons();
   }
 
   function formatTime(total) {
@@ -1725,9 +2054,68 @@
     toastTimer = setTimeout(() => el.toast.classList.remove('show'), 2100);
   }
 
+
+  function openDealCodeModal() {
+    updateDifficultyUI();
+    el.codeInput.value = '';
+    el.codeModal.classList.add('show');
+    setTimeout(() => el.codeInput.focus(), 50);
+  }
+
+  function closeDealCodeModal() {
+    el.codeModal.classList.remove('show');
+  }
+
+  async function copyCurrentDealCode() {
+    if (!currentDealCode) {
+      showToast('Сначала начни игру');
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(currentDealCode);
+      showToast('Код скопирован');
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = currentDealCode;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+      showToast('Код скопирован');
+    }
+  }
+
+  function playEnteredDealCode() {
+    const parsed = parseDealCode(el.codeInput.value);
+
+    if (!parsed) {
+      showToast('Проверь код раскладки');
+      return;
+    }
+
+    startNewGame(parsed.difficulty, {
+      gameKind:parsed.gameKind,
+      seed:parsed.seed,
+      code:parsed.code
+    });
+  }
+
   function persist() {
     try {
-      localStorage.setItem('miyeonSpiderSave', JSON.stringify({tableau, stock, completed, moves, seconds, difficulty:currentDifficulty}));
+      localStorage.setItem('miyeonSpiderSave', JSON.stringify({
+        tableau,
+        stock,
+        completed,
+        moves,
+        seconds,
+        difficulty:currentDifficulty,
+        seed:currentSeed,
+        dealCode:currentDealCode,
+        gameKind:currentGameKind
+      }));
     } catch {}
   }
 
@@ -1751,6 +2139,20 @@
         'hard'
       );
       localStorage.setItem('miyeonSpiderDifficulty', currentDifficulty);
+
+      currentSeed = Number.isInteger(state.seed)
+        ? state.seed >>> 0
+        : makeRandomSeed();
+
+      currentGameKind = ['random', 'daily', 'code'].includes(state.gameKind)
+        ? state.gameKind
+        : 'random';
+
+      currentDealCode = state.dealCode || formatRandomDealCode(
+        currentDifficulty,
+        currentSeed
+      );
+
       hasStartedGame = true;
       updateDifficultyUI();
       timer = setInterval(() => {
@@ -1764,17 +2166,50 @@
     }
   }
 
-  document.getElementById('newGameBtn').addEventListener('click', () => openDifficultySelector(false));
-  document.getElementById('playAgainBtn').addEventListener('click', () => startNewGame(currentDifficulty));
+  document.getElementById('newGameBtn').addEventListener(
+    'click',
+    () => openDifficultySelector(false, 'random')
+  );
+
+  el.dailyGame.addEventListener(
+    'click',
+    () => openDifficultySelector(false, 'daily')
+  );
+
+  el.dealCode.addEventListener('click', openDealCodeModal);
+  el.autoComplete.addEventListener('click', autoCompleteGame);
+  document.getElementById('playAgainBtn').addEventListener('click', () => {
+    if (currentGameKind === 'daily' || currentGameKind === 'code') {
+      startNewGame(currentDifficulty, {
+        gameKind:currentGameKind,
+        seed:currentSeed,
+        code:currentDealCode
+      });
+    } else {
+      startNewGame(currentDifficulty, {gameKind:'random'});
+    }
+  });
   document.querySelectorAll('.difficulty-option').forEach(button => {
     button.addEventListener('click', () => {
-      startNewGame(button.dataset.difficulty);
+      startNewGame(button.dataset.difficulty, {
+        gameKind:pendingStartMode
+      });
     });
   });
 
   el.difficultyCancel.addEventListener('click', closeDifficultySelector);
   el.difficulty.addEventListener('click', event => {
     if (event.target === el.difficulty && hasStartedGame) closeDifficultySelector();
+  });
+
+  el.copyCode.addEventListener('click', copyCurrentDealCode);
+  el.playCode.addEventListener('click', playEnteredDealCode);
+  el.closeCode.addEventListener('click', closeDealCodeModal);
+  el.codeInput.addEventListener('keydown', event => {
+    if (event.key === 'Enter') playEnteredDealCode();
+  });
+  el.codeModal.addEventListener('click', event => {
+    if (event.target === el.codeModal) closeDealCodeModal();
   });
 
   document.getElementById('undoBtn').addEventListener('click', undo);
@@ -1792,7 +2227,7 @@
   (async () => {
     await preloadAllCardImages();
     updateDifficultyUI();
-    if (!restore()) openDifficultySelector(true);
+    if (!restore()) openDifficultySelector(true, 'random');
   })();
 })();
 </script>
