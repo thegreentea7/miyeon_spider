@@ -698,6 +698,364 @@
     }
 
 
+
+    .daily-calendar-card{
+      width:min(790px,calc(100vw - 24px));
+      max-height:min(92vh,880px);
+      overflow:auto;
+      padding:22px;
+      text-align:left;
+    }
+
+    .daily-calendar-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:14px;
+    }
+
+    .daily-calendar-title h2{
+      margin:0 0 5px;
+      font-size:26px;
+    }
+
+    .daily-calendar-title p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .calendar-close{
+      flex:0 0 auto;
+      width:38px;
+      height:38px;
+      padding:0;
+      border-radius:50%;
+      font-size:21px;
+      line-height:1;
+    }
+
+    .calendar-summary{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:12px;
+      align-items:stretch;
+      margin-bottom:14px;
+    }
+
+    .calendar-progress-card,
+    .calendar-trophy-card{
+      border:1px solid rgba(87,62,83,.1);
+      border-radius:18px;
+      background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(247,235,246,.9));
+      box-shadow:0 8px 22px rgba(86,57,82,.08);
+      padding:13px 15px;
+    }
+
+    .calendar-progress-card strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:16px;
+    }
+
+    .calendar-progress-track{
+      height:9px;
+      overflow:hidden;
+      border-radius:999px;
+      background:rgba(133,99,126,.12);
+    }
+
+    .calendar-progress-fill{
+      width:0;
+      height:100%;
+      border-radius:inherit;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      transition:width .25s ease;
+    }
+
+    .calendar-progress-caption{
+      display:block;
+      margin-top:6px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .calendar-trophy-card{
+      min-width:170px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .calendar-trophy-icon{
+      font-size:34px;
+      filter:drop-shadow(0 5px 8px rgba(98,65,91,.12));
+    }
+
+    .calendar-trophy-card b,
+    .calendar-trophy-card span{
+      display:block;
+    }
+
+    .calendar-trophy-card span{
+      margin-top:3px;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .calendar-panel{
+      border:1px solid rgba(87,62,83,.1);
+      border-radius:20px;
+      background:rgba(255,255,255,.76);
+      padding:13px;
+      box-shadow:0 9px 26px rgba(86,57,82,.08);
+    }
+
+    .calendar-nav{
+      display:grid;
+      grid-template-columns:42px minmax(0,1fr) 42px;
+      align-items:center;
+      gap:8px;
+      margin-bottom:11px;
+    }
+
+    .calendar-nav button{
+      width:42px;
+      height:38px;
+      padding:0;
+      border-radius:13px;
+      font-size:20px;
+    }
+
+    .calendar-month-title{
+      text-align:center;
+      font-size:18px;
+      font-weight:900;
+      text-transform:capitalize;
+    }
+
+    .calendar-weekdays,
+    .calendar-grid{
+      display:grid;
+      grid-template-columns:repeat(7,minmax(0,1fr));
+      gap:6px;
+    }
+
+    .calendar-weekdays{
+      margin-bottom:6px;
+    }
+
+    .calendar-weekdays span{
+      padding:3px 0;
+      text-align:center;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .calendar-day-placeholder{
+      min-height:58px;
+    }
+
+    .calendar-day{
+      position:relative;
+      min-width:0;
+      min-height:58px;
+      padding:8px 6px;
+      border:1px solid rgba(91,64,87,.09);
+      border-radius:14px;
+      background:rgba(255,255,255,.82);
+      color:var(--ink);
+      text-align:left;
+      box-shadow:0 4px 12px rgba(86,57,82,.05);
+      transition:transform .14s ease,border-color .14s ease,box-shadow .14s ease,background .14s ease;
+    }
+
+    .calendar-day:not(:disabled):hover{
+      transform:translateY(-1px);
+      border-color:rgba(216,111,159,.35);
+      box-shadow:0 8px 16px rgba(86,57,82,.1);
+    }
+
+    .calendar-day-number{
+      display:block;
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .calendar-day-status{
+      position:absolute;
+      right:7px;
+      bottom:5px;
+      min-height:18px;
+      font-size:16px;
+      line-height:1;
+    }
+
+    .calendar-day.completed{
+      background:linear-gradient(145deg,#fff8fb,#f2e9fa);
+      border-color:rgba(216,111,159,.26);
+    }
+
+    .calendar-day.completed .calendar-day-status{
+      color:var(--accent);
+    }
+
+    .calendar-day.today{
+      box-shadow:inset 0 0 0 2px rgba(143,114,203,.48),0 5px 14px rgba(86,57,82,.07);
+    }
+
+    .calendar-day.selected{
+      color:#fff;
+      border-color:transparent;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 9px 20px rgba(143,89,145,.25);
+    }
+
+    .calendar-day.selected .calendar-day-status{
+      color:#fff;
+    }
+
+    .calendar-day:disabled{
+      opacity:.32;
+      cursor:not-allowed;
+      box-shadow:none;
+      background:rgba(255,255,255,.4);
+    }
+
+    .daily-selected-panel{
+      margin-top:13px;
+      padding:14px;
+      border-radius:18px;
+      background:linear-gradient(145deg,rgba(247,234,244,.88),rgba(236,230,250,.9));
+      border:1px solid rgba(91,64,87,.09);
+    }
+
+    .daily-selected-header{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      margin-bottom:10px;
+    }
+
+    .daily-selected-header strong{
+      display:block;
+      font-size:17px;
+    }
+
+    .daily-selected-meta{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .daily-completed-badge{
+      flex:0 0 auto;
+      padding:6px 9px;
+      border-radius:999px;
+      background:rgba(255,255,255,.74);
+      color:var(--accent);
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .daily-difficulty-label{
+      display:block;
+      margin-bottom:7px;
+      color:#675562;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .daily-difficulty-buttons{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .daily-difficulty-buttons .btn{
+      white-space:nowrap;
+    }
+
+    .daily-tools{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      margin-top:13px;
+    }
+
+    .daily-tools-note{
+      flex:1 1 240px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.4;
+    }
+
+    .trophy-section{
+      margin-top:14px;
+      padding-top:13px;
+      border-top:1px solid rgba(87,62,83,.1);
+    }
+
+    .trophy-section h3{
+      margin:0 0 9px;
+      font-size:15px;
+    }
+
+    .trophy-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+    }
+
+    .trophy-chip{
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.84);
+      border:1px solid rgba(87,62,83,.09);
+      box-shadow:0 4px 10px rgba(86,57,82,.06);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .trophy-empty{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .monthly-trophy-notice{
+      display:none;
+      margin:12px 0 18px;
+      padding:12px 14px;
+      border-radius:15px;
+      background:linear-gradient(135deg,#fff1b9,#f5d38f);
+      color:#6b4b19;
+      font-weight:900;
+      line-height:1.4;
+    }
+
+    .monthly-trophy-notice.show{
+      display:block;
+    }
+
+    @media(max-width:680px){
+      .daily-calendar-card{padding:16px}
+      .calendar-summary{grid-template-columns:1fr}
+      .calendar-trophy-card{min-width:0}
+      .calendar-day,.calendar-day-placeholder{min-height:48px}
+      .calendar-day{padding:6px 5px;border-radius:11px}
+      .calendar-day-status{right:5px;bottom:4px;font-size:14px}
+      .daily-difficulty-buttons{grid-template-columns:1fr}
+      .daily-selected-header{flex-direction:column}
+      .calendar-weekdays,.calendar-grid{gap:4px}
+    }
+
     .code-card{
       width:min(470px,calc(100vw - 32px));
       padding:25px;
@@ -921,6 +1279,79 @@
   </div>
 
 
+
+  <div class="modal" id="dailyCalendarModal">
+    <div class="modal-card daily-calendar-card">
+      <div class="daily-calendar-top">
+        <div class="daily-calendar-title">
+          <h2>Ежедневные раскладки</h2>
+          <p>Пропущенный день можно пройти позже. Одна победа закрывает день на любой сложности.</p>
+        </div>
+        <button class="btn calendar-close" type="button" id="closeDailyCalendarBtn" aria-label="Закрыть">×</button>
+      </div>
+
+      <div class="calendar-summary">
+        <div class="calendar-progress-card">
+          <strong id="calendarProgressTitle">Прогресс месяца</strong>
+          <div class="calendar-progress-track">
+            <div class="calendar-progress-fill" id="calendarProgressFill"></div>
+          </div>
+          <span class="calendar-progress-caption" id="calendarProgressCaption">0 / 31 дней</span>
+        </div>
+
+        <div class="calendar-trophy-card">
+          <div class="calendar-trophy-icon" id="calendarTrophyIcon">♡</div>
+          <div>
+            <b id="calendarTrophyTitle">Кубок месяца</b>
+            <span id="calendarTrophyCaption">Закрой все дни</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calendar-panel">
+        <div class="calendar-nav">
+          <button class="btn" type="button" id="calendarPrevBtn" aria-label="Предыдущий месяц">‹</button>
+          <div class="calendar-month-title" id="calendarMonthTitle"></div>
+          <button class="btn" type="button" id="calendarNextBtn" aria-label="Следующий месяц">›</button>
+        </div>
+
+        <div class="calendar-weekdays" aria-hidden="true">
+          <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <div class="daily-selected-panel" id="dailySelectedPanel">
+          <div class="daily-selected-header">
+            <div>
+              <strong id="dailySelectedTitle">Выбери день</strong>
+              <div class="daily-selected-meta" id="dailySelectedMeta">Можно выбрать сегодняшний или любой пропущенный день.</div>
+            </div>
+            <span class="daily-completed-badge" id="dailyCompletedBadge" hidden>♥ Пройдено</span>
+          </div>
+
+          <span class="daily-difficulty-label">Выбери сложность:</span>
+          <div class="daily-difficulty-buttons">
+            <button class="btn" type="button" data-daily-difficulty="easy"><span class="heart">♥</span> Лёгкий</button>
+            <button class="btn" type="button" data-daily-difficulty="medium"><span class="heart">♥</span><span class="spade">♠</span> Средний</button>
+            <button class="btn" type="button" data-daily-difficulty="hard"><span class="heart">♥</span><span class="spade">♠</span><span class="diamond">♦</span><span class="club">♣</span> Сложный</button>
+          </div>
+        </div>
+
+        <div class="daily-tools">
+          <button class="btn" type="button" id="exportDailyProgressBtn">Экспорт прогресса</button>
+          <button class="btn" type="button" id="importDailyProgressBtn">Импорт прогресса</button>
+          <input id="importDailyProgressInput" type="file" accept="application/json,.json" hidden>
+          <span class="daily-tools-note">Прогресс хранится в этом браузере. Экспорт пригодится для переноса на другое устройство или восстановления после очистки данных.</span>
+        </div>
+
+        <div class="trophy-section">
+          <h3>Мои кубки</h3>
+          <div class="trophy-list" id="trophyList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal" id="dealCodeModal">
     <div class="modal-card code-card">
       <div class="big">#</div>
@@ -955,6 +1386,7 @@
       <div class="big">🎀</div>
       <h2>Ты победил(а)!</h2>
       <p id="winText">Все восемь серий собраны ♡</p>
+      <div class="monthly-trophy-notice" id="monthlyTrophyNotice"></div>
       <button class="btn primary" id="playAgainBtn">Сыграть ещё раз</button>
     </div>
   </div>
@@ -974,7 +1406,8 @@
         <li>Пустой столбец можно заполнить любой картой или собранной серией.</li>
         <li>Новый ряд нельзя раздать, пока хотя бы один столбец пуст.</li>
         <li>Автозавершение доступно, когда колода закончилась и все оставшиеся карты открыты.</li>
-        <li>Ежедневная раскладка одинакова для всех игроков на выбранной сложности.</li>
+        <li>В календаре можно пройти сегодняшний или любой пропущенный день. Будущие даты закрыты.</li>
+        <li>День считается закрытым после победы на любой сложности. За все дни месяца выдаётся кубок.</li>
         <li>Код раскладки позволяет повторить ту же самую партию.</li>
       </ul>
       <p style="color:#7c6d79">Управление: нажми на карту или серию, затем — на столбец назначения. Также работает перетаскивание мышью.</p>
@@ -1015,6 +1448,11 @@
   let currentGameKind = 'random';
   let currentSeed = 0;
   let currentDealCode = '';
+  let currentDailyDateKey = '';
+  let selectedDailyDateKey = '';
+  let calendarViewDate = new Date();
+  calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth(), 1);
+  let lastAwardedTrophyKey = '';
 
   const el = {
     game: document.getElementById('game'),
@@ -1042,8 +1480,213 @@
     codeInput: document.getElementById('dealCodeInput'),
     copyCode: document.getElementById('copyDealCodeBtn'),
     playCode: document.getElementById('playDealCodeBtn'),
-    closeCode: document.getElementById('closeDealCodeBtn')
+    closeCode: document.getElementById('closeDealCodeBtn'),
+    dailyCalendar: document.getElementById('dailyCalendarModal'),
+    closeDailyCalendar: document.getElementById('closeDailyCalendarBtn'),
+    calendarPrev: document.getElementById('calendarPrevBtn'),
+    calendarNext: document.getElementById('calendarNextBtn'),
+    calendarMonthTitle: document.getElementById('calendarMonthTitle'),
+    calendarGrid: document.getElementById('calendarGrid'),
+    calendarProgressTitle: document.getElementById('calendarProgressTitle'),
+    calendarProgressFill: document.getElementById('calendarProgressFill'),
+    calendarProgressCaption: document.getElementById('calendarProgressCaption'),
+    calendarTrophyIcon: document.getElementById('calendarTrophyIcon'),
+    calendarTrophyTitle: document.getElementById('calendarTrophyTitle'),
+    calendarTrophyCaption: document.getElementById('calendarTrophyCaption'),
+    dailySelectedTitle: document.getElementById('dailySelectedTitle'),
+    dailySelectedMeta: document.getElementById('dailySelectedMeta'),
+    dailyCompletedBadge: document.getElementById('dailyCompletedBadge'),
+    trophyList: document.getElementById('trophyList'),
+    exportDailyProgress: document.getElementById('exportDailyProgressBtn'),
+    importDailyProgress: document.getElementById('importDailyProgressBtn'),
+    importDailyProgressInput: document.getElementById('importDailyProgressInput'),
+    monthlyTrophyNotice: document.getElementById('monthlyTrophyNotice')
   };
+
+
+  const DAILY_PROGRESS_KEY = 'miyeonSpiderDailyProgressV1';
+  const DAILY_START_DATE_KEY = '20260801';
+  const MONTH_NAMES = [
+    'январь','февраль','март','апрель','май','июнь',
+    'июль','август','сентябрь','октябрь','ноябрь','декабрь'
+  ];
+  const MONTH_NAMES_GENITIVE = [
+    'января','февраля','марта','апреля','мая','июня',
+    'июля','августа','сентября','октября','ноября','декабря'
+  ];
+
+  function emptyDailyProgress() {
+    return {version:1, days:{}, trophies:{}};
+  }
+
+  function sanitizeDailyProgress(value) {
+    const result = emptyDailyProgress();
+    if (!value || typeof value !== 'object') return result;
+
+    const sourceDays = value.days && typeof value.days === 'object' ? value.days : {};
+    Object.entries(sourceDays).forEach(([dateKey, record]) => {
+      if (!/^\d{8}$/.test(dateKey) || !record || typeof record !== 'object') return;
+      if (!record.completed) return;
+
+      const bestTime = Number(record.bestTime);
+      const bestMoves = Number(record.bestMoves);
+      const plays = Number(record.plays);
+      const difficulty = ['easy','medium','hard'].includes(record.difficulty)
+        ? record.difficulty
+        : 'medium';
+
+      result.days[dateKey] = {
+        completed:true,
+        bestTime:Number.isFinite(bestTime) && bestTime >= 0 ? Math.floor(bestTime) : 0,
+        bestMoves:Number.isFinite(bestMoves) && bestMoves >= 0 ? Math.floor(bestMoves) : 0,
+        difficulty,
+        plays:Number.isFinite(plays) && plays > 0 ? Math.floor(plays) : 1,
+        completedAt:typeof record.completedAt === 'string' ? record.completedAt : ''
+      };
+    });
+
+    const sourceTrophies = value.trophies && typeof value.trophies === 'object'
+      ? value.trophies
+      : {};
+    Object.entries(sourceTrophies).forEach(([monthKey, trophy]) => {
+      if (!/^\d{4}-\d{2}$/.test(monthKey)) return;
+      result.trophies[monthKey] = {
+        earned:true,
+        earnedAt:trophy && typeof trophy.earnedAt === 'string' ? trophy.earnedAt : ''
+      };
+    });
+
+    return result;
+  }
+
+  function loadDailyProgress() {
+    try {
+      const raw = localStorage.getItem(DAILY_PROGRESS_KEY);
+      return raw ? sanitizeDailyProgress(JSON.parse(raw)) : emptyDailyProgress();
+    } catch {
+      return emptyDailyProgress();
+    }
+  }
+
+  let dailyProgress = loadDailyProgress();
+
+  function saveDailyProgress() {
+    try {
+      localStorage.setItem(DAILY_PROGRESS_KEY, JSON.stringify(dailyProgress));
+    } catch {}
+  }
+
+  function localDateKey(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}${month}${day}`;
+  }
+
+  function dateFromKey(dateKey) {
+    const year = Number(dateKey.slice(0,4));
+    const month = Number(dateKey.slice(4,6)) - 1;
+    const day = Number(dateKey.slice(6,8));
+    return new Date(year, month, day, 12, 0, 0, 0);
+  }
+
+  function monthKeyFromParts(year, monthIndex) {
+    return `${year}-${String(monthIndex + 1).padStart(2,'0')}`;
+  }
+
+  function dateLabel(dateKey) {
+    const date = dateFromKey(dateKey);
+    return `${date.getDate()} ${MONTH_NAMES_GENITIVE[date.getMonth()]} ${date.getFullYear()}`;
+  }
+
+  function monthLabel(year, monthIndex) {
+    return `${MONTH_NAMES[monthIndex]} ${year}`;
+  }
+
+  function daysInMonth(year, monthIndex) {
+    return new Date(year, monthIndex + 1, 0).getDate();
+  }
+
+  function isDateAvailable(dateKey) {
+    return dateKey >= DAILY_START_DATE_KEY && dateKey <= localDateKey();
+  }
+
+  function monthProgress(year, monthIndex) {
+    const total = daysInMonth(year, monthIndex);
+    let completedCount = 0;
+
+    for (let day = 1; day <= total; day++) {
+      const key = localDateKey(new Date(year, monthIndex, day, 12));
+      if (key < DAILY_START_DATE_KEY) continue;
+      if (dailyProgress.days[key]?.completed) completedCount++;
+    }
+
+    return {completed:completedCount, total};
+  }
+
+  function isWholeMonthAvailable(year, monthIndex) {
+    const lastDateKey = localDateKey(new Date(year, monthIndex + 1, 0, 12));
+    return lastDateKey <= localDateKey();
+  }
+
+  function checkAndAwardTrophy(year, monthIndex) {
+    const key = monthKeyFromParts(year, monthIndex);
+    if (dailyProgress.trophies[key]?.earned) return '';
+    if (!isWholeMonthAvailable(year, monthIndex)) return '';
+
+    const firstDateKey = localDateKey(new Date(year, monthIndex, 1, 12));
+    if (firstDateKey < DAILY_START_DATE_KEY) return '';
+
+    const progress = monthProgress(year, monthIndex);
+    if (progress.completed !== progress.total) return '';
+
+    dailyProgress.trophies[key] = {
+      earned:true,
+      earnedAt:new Date().toISOString()
+    };
+    saveDailyProgress();
+    return key;
+  }
+
+  function ensureAllEarnedTrophies() {
+    const start = dateFromKey(DAILY_START_DATE_KEY);
+    const now = new Date();
+    let cursor = new Date(start.getFullYear(), start.getMonth(), 1);
+
+    while (cursor <= new Date(now.getFullYear(), now.getMonth(), 1)) {
+      checkAndAwardTrophy(cursor.getFullYear(), cursor.getMonth());
+      cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
+    }
+  }
+
+  function mergeDailyProgress(imported) {
+    const clean = sanitizeDailyProgress(imported);
+
+    Object.entries(clean.days).forEach(([dateKey, incoming]) => {
+      const current = dailyProgress.days[dateKey];
+      if (!current) {
+        dailyProgress.days[dateKey] = incoming;
+        return;
+      }
+
+      const incomingIsBetter =
+        incoming.bestTime < current.bestTime ||
+        (incoming.bestTime === current.bestTime && incoming.bestMoves < current.bestMoves);
+
+      dailyProgress.days[dateKey] = {
+        ...(incomingIsBetter ? incoming : current),
+        plays:Math.max(current.plays || 1, incoming.plays || 1),
+        completed:true
+      };
+    });
+
+    Object.entries(clean.trophies).forEach(([key, value]) => {
+      dailyProgress.trophies[key] = dailyProgress.trophies[key] || value;
+    });
+
+    ensureAllEarnedTrophies();
+    saveDailyProgress();
+  }
 
   const DIFFICULTY_LETTERS = {
     easy: 'E',
@@ -1091,7 +1734,7 @@
   }
 
   function utcDateKey() {
-    return new Date().toISOString().slice(0, 10).replaceAll('-', '');
+    return localDateKey();
   }
 
   function seedForDaily(dateKey, difficulty) {
@@ -1145,7 +1788,8 @@
         difficulty,
         seed: seedForDaily(dateKey, difficulty),
         code: formatDailyDealCode(difficulty, dateKey),
-        gameKind: 'daily'
+        gameKind: 'daily',
+        dateKey
       };
     }
 
@@ -1189,6 +1833,255 @@
     if (difficulty === 'easy') return 'Лёгкий режим';
     if (difficulty === 'hard') return 'Сложный режим';
     return 'Средний режим';
+  }
+
+
+  function openDailyCalendar() {
+    ensureAllEarnedTrophies();
+    const today = new Date();
+    calendarViewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    selectedDailyDateKey = localDateKey(today);
+    renderDailyCalendar();
+    el.dailyCalendar.classList.add('show');
+  }
+
+  function closeDailyCalendar() {
+    el.dailyCalendar.classList.remove('show');
+  }
+
+  function renderDailySelectedDay() {
+    if (!selectedDailyDateKey || !isDateAvailable(selectedDailyDateKey)) {
+      el.dailySelectedTitle.textContent = 'Выбери день';
+      el.dailySelectedMeta.textContent = 'Можно выбрать сегодняшний или любой пропущенный день.';
+      el.dailyCompletedBadge.hidden = true;
+      return;
+    }
+
+    const record = dailyProgress.days[selectedDailyDateKey];
+    el.dailySelectedTitle.textContent = dateLabel(selectedDailyDateKey);
+
+    if (record?.completed) {
+      el.dailyCompletedBadge.hidden = false;
+      el.dailySelectedMeta.textContent =
+        `Лучший результат: ${difficultyName(record.difficulty)}, ` +
+        `${formatTime(record.bestTime)}, ${record.bestMoves} ходов. ` +
+        `Сыграно раз: ${record.plays || 1}.`;
+    } else {
+      el.dailyCompletedBadge.hidden = true;
+      el.dailySelectedMeta.textContent = 'Этот день ещё не пройден. Победа на любой сложности закроет его.';
+    }
+  }
+
+  function renderTrophyList() {
+    const trophies = Object.keys(dailyProgress.trophies)
+      .filter(key => dailyProgress.trophies[key]?.earned)
+      .sort()
+      .reverse();
+
+    el.trophyList.innerHTML = '';
+
+    if (!trophies.length) {
+      const empty = document.createElement('span');
+      empty.className = 'trophy-empty';
+      empty.textContent = 'Пока нет кубков.';
+      el.trophyList.appendChild(empty);
+      return;
+    }
+
+    trophies.forEach(key => {
+      const [year, month] = key.split('-').map(Number);
+      const chip = document.createElement('span');
+      chip.className = 'trophy-chip';
+      chip.textContent = `🏆 ${MONTH_NAMES[month - 1]} ${year}`;
+      el.trophyList.appendChild(chip);
+    });
+  }
+
+  function renderDailyCalendar() {
+    ensureAllEarnedTrophies();
+
+    const year = calendarViewDate.getFullYear();
+    const month = calendarViewDate.getMonth();
+    const todayKey = localDateKey();
+    const currentMonthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const startDate = dateFromKey(DAILY_START_DATE_KEY);
+    const startMonth = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+    const viewedMonth = new Date(year, month, 1);
+    const key = monthKeyFromParts(year, month);
+    const progress = monthProgress(year, month);
+    const percent = progress.total ? Math.round((progress.completed / progress.total) * 100) : 0;
+
+    el.calendarMonthTitle.textContent = monthLabel(year, month);
+    el.calendarProgressTitle.textContent = `Прогресс: ${monthLabel(year, month)}`;
+    el.calendarProgressCaption.textContent = `${progress.completed} / ${progress.total} дней`;
+    el.calendarProgressFill.style.width = `${percent}%`;
+
+    const hasTrophy = Boolean(dailyProgress.trophies[key]?.earned);
+    el.calendarTrophyIcon.textContent = hasTrophy ? '🏆' : '♡';
+    el.calendarTrophyTitle.textContent = hasTrophy ? 'Кубок получен' : 'Кубок месяца';
+    el.calendarTrophyCaption.textContent = hasTrophy
+      ? `${MONTH_NAMES[month]} ${year}`
+      : isWholeMonthAvailable(year, month)
+        ? `Осталось: ${Math.max(0, progress.total - progress.completed)}`
+        : 'Закрой все дни месяца';
+
+    el.calendarPrev.disabled = viewedMonth <= startMonth;
+    el.calendarNext.disabled = viewedMonth >= currentMonthStart;
+    el.calendarGrid.innerHTML = '';
+
+    const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+    for (let i = 0; i < firstWeekday; i++) {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'calendar-day-placeholder';
+      el.calendarGrid.appendChild(placeholder);
+    }
+
+    const count = daysInMonth(year, month);
+    for (let day = 1; day <= count; day++) {
+      const date = new Date(year, month, day, 12);
+      const dateKey = localDateKey(date);
+      const record = dailyProgress.days[dateKey];
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'calendar-day';
+      button.dataset.dateKey = dateKey;
+      button.innerHTML = `
+        <span class="calendar-day-number">${day}</span>
+        <span class="calendar-day-status">${record?.completed ? '♥' : ''}</span>
+      `;
+
+      if (record?.completed) button.classList.add('completed');
+      if (dateKey === todayKey) button.classList.add('today');
+      if (dateKey === selectedDailyDateKey) button.classList.add('selected');
+
+      const available = isDateAvailable(dateKey);
+      button.disabled = !available;
+      button.title =
+        dateKey > todayKey ? 'Этот день ещё не наступил' :
+        dateKey < DAILY_START_DATE_KEY ? 'Ежедневки появились позже' :
+        record?.completed ? 'Пройдено — можно сыграть ещё раз' :
+        'Сыграть ежедневную раскладку';
+
+      button.addEventListener('click', () => {
+        selectedDailyDateKey = dateKey;
+        renderDailyCalendar();
+      });
+
+      el.calendarGrid.appendChild(button);
+    }
+
+    renderDailySelectedDay();
+    renderTrophyList();
+  }
+
+  function changeCalendarMonth(offset) {
+    calendarViewDate = new Date(
+      calendarViewDate.getFullYear(),
+      calendarViewDate.getMonth() + offset,
+      1
+    );
+
+    const selectedDate = new Date(
+      calendarViewDate.getFullYear(),
+      calendarViewDate.getMonth(),
+      1,
+      12
+    );
+    selectedDailyDateKey = '';
+
+    const today = new Date();
+    if (
+      selectedDate.getFullYear() === today.getFullYear() &&
+      selectedDate.getMonth() === today.getMonth()
+    ) {
+      selectedDailyDateKey = localDateKey(today);
+    }
+
+    renderDailyCalendar();
+  }
+
+  function startSelectedDaily(difficulty) {
+    if (!selectedDailyDateKey || !isDateAvailable(selectedDailyDateKey)) {
+      showToast('Сначала выбери доступный день');
+      return;
+    }
+
+    closeDailyCalendar();
+    startNewGame(difficulty, {
+      gameKind:'daily',
+      dateKey:selectedDailyDateKey
+    });
+  }
+
+  function recordDailyVictory() {
+    if (currentGameKind !== 'daily' || !currentDailyDateKey) return '';
+
+    const previous = dailyProgress.days[currentDailyDateKey];
+    const newResult = {
+      completed:true,
+      bestTime:seconds,
+      bestMoves:moves,
+      difficulty:currentDifficulty,
+      plays:(previous?.plays || 0) + 1,
+      completedAt:new Date().toISOString()
+    };
+
+    if (previous?.completed) {
+      const newIsBetter =
+        seconds < previous.bestTime ||
+        (seconds === previous.bestTime && moves < previous.bestMoves);
+
+      if (!newIsBetter) {
+        newResult.bestTime = previous.bestTime;
+        newResult.bestMoves = previous.bestMoves;
+        newResult.difficulty = previous.difficulty;
+        newResult.completedAt = previous.completedAt;
+      }
+    }
+
+    dailyProgress.days[currentDailyDateKey] = newResult;
+    const date = dateFromKey(currentDailyDateKey);
+    const trophyKey = checkAndAwardTrophy(date.getFullYear(), date.getMonth());
+    saveDailyProgress();
+    return trophyKey;
+  }
+
+  function exportDailyProgressFile() {
+    const payload = {
+      type:'miyeon-spider-daily-progress',
+      version:1,
+      exportedAt:new Date().toISOString(),
+      progress:dailyProgress
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `miyeon-spider-progress-${localDateKey()}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast('Прогресс сохранён в файл');
+  }
+
+  async function importDailyProgressFile(file) {
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      const source = parsed?.type === 'miyeon-spider-daily-progress'
+        ? parsed.progress
+        : parsed;
+      mergeDailyProgress(source);
+      renderDailyCalendar();
+      showToast('Прогресс восстановлен');
+    } catch {
+      showToast('Не удалось прочитать файл прогресса');
+    } finally {
+      el.importDailyProgressInput.value = '';
+    }
   }
 
   function updateDifficultyUI() {
@@ -1236,12 +2129,14 @@
       : 'medium';
 
     const requestedKind = options.gameKind || pendingStartMode || 'random';
+    const requestedDailyDateKey = requestedKind === 'daily'
+      ? (options.dateKey || currentDailyDateKey || utcDateKey())
+      : '';
 
     if (Number.isInteger(options.seed)) {
       currentSeed = options.seed >>> 0;
     } else if (requestedKind === 'daily') {
-      const dateKey = options.dateKey || utcDateKey();
-      currentSeed = seedForDaily(dateKey, currentDifficulty);
+      currentSeed = seedForDaily(requestedDailyDateKey, currentDifficulty);
     } else {
       currentSeed = makeRandomSeed();
     }
@@ -1251,12 +2146,16 @@
       requestedKind === 'code' ? 'code' :
       'random';
 
+    currentDailyDateKey = currentGameKind === 'daily'
+      ? requestedDailyDateKey
+      : '';
+
     if (options.code) {
       currentDealCode = options.code;
     } else if (currentGameKind === 'daily') {
       currentDealCode = formatDailyDealCode(
         currentDifficulty,
-        options.dateKey || utcDateKey()
+        currentDailyDateKey
       );
     } else {
       currentDealCode = formatRandomDealCode(currentDifficulty, currentSeed);
@@ -1267,6 +2166,9 @@
     updateDifficultyUI();
     closeDifficultySelector();
     el.codeModal.classList.remove('show');
+    el.dailyCalendar.classList.remove('show');
+    el.monthlyTrophyNotice.classList.remove('show');
+    el.monthlyTrophyNotice.textContent = '';
     stopVictoryAnimation();
     clearDragPreview();
     const deck = buildDeck(currentDifficulty, currentSeed);
@@ -1314,7 +2216,8 @@
       difficulty:currentDifficulty,
       seed:currentSeed,
       dealCode:currentDealCode,
-      gameKind:currentGameKind
+      gameKind:currentGameKind,
+      dailyDateKey:currentDailyDateKey
     }));
     if (undoStack.length > 100) undoStack.shift();
   }
@@ -1331,6 +2234,9 @@
     currentSeed = Number.isInteger(state.seed) ? state.seed >>> 0 : currentSeed;
     currentDealCode = state.dealCode || currentDealCode;
     currentGameKind = state.gameKind || currentGameKind;
+    currentDailyDateKey = state.dailyDateKey || (
+      currentGameKind === 'daily' ? parseDealCode(currentDealCode)?.dateKey || '' : ''
+    );
     updateDifficultyUI();
     selected = null;
     render();
@@ -1715,6 +2621,7 @@
   function winGame() {
     clearInterval(timer);
     clearDragPreview();
+    lastAwardedTrophyKey = recordDailyVictory();
     localStorage.removeItem('miyeonSpiderSave');
     selected = null;
     updateSelectionUI();
@@ -1722,6 +2629,16 @@
     stopVictoryAnimation();
     const token = victoryAnimationToken;
     el.win.classList.remove('show');
+
+    if (lastAwardedTrophyKey) {
+      const [trophyYear, trophyMonth] = lastAwardedTrophyKey.split('-').map(Number);
+      el.monthlyTrophyNotice.textContent =
+        `🏆 Получен кубок: ${MONTH_NAMES[trophyMonth - 1]} ${trophyYear}!`;
+      el.monthlyTrophyNotice.classList.add('show');
+    } else {
+      el.monthlyTrophyNotice.textContent = '';
+      el.monthlyTrophyNotice.classList.remove('show');
+    }
 
     if (reduceMotion) {
       el.winText.textContent =
@@ -2099,7 +3016,8 @@
     startNewGame(parsed.difficulty, {
       gameKind:parsed.gameKind,
       seed:parsed.seed,
-      code:parsed.code
+      code:parsed.code,
+      dateKey:parsed.dateKey || ''
     });
   }
 
@@ -2114,7 +3032,8 @@
         difficulty:currentDifficulty,
         seed:currentSeed,
         dealCode:currentDealCode,
-        gameKind:currentGameKind
+        gameKind:currentGameKind,
+        dailyDateKey:currentDailyDateKey
       }));
     } catch {}
   }
@@ -2153,6 +3072,10 @@
         currentSeed
       );
 
+      currentDailyDateKey = state.dailyDateKey || (
+        currentGameKind === 'daily' ? parseDealCode(currentDealCode)?.dateKey || '' : ''
+      );
+
       hasStartedGame = true;
       updateDifficultyUI();
       timer = setInterval(() => {
@@ -2171,10 +3094,7 @@
     () => openDifficultySelector(false, 'random')
   );
 
-  el.dailyGame.addEventListener(
-    'click',
-    () => openDifficultySelector(false, 'daily')
-  );
+  el.dailyGame.addEventListener('click', openDailyCalendar);
 
   el.dealCode.addEventListener('click', openDealCodeModal);
   el.autoComplete.addEventListener('click', autoCompleteGame);
@@ -2183,7 +3103,8 @@
       startNewGame(currentDifficulty, {
         gameKind:currentGameKind,
         seed:currentSeed,
-        code:currentDealCode
+        code:currentDealCode,
+        dateKey:currentDailyDateKey
       });
     } else {
       startNewGame(currentDifficulty, {gameKind:'random'});
@@ -2200,6 +3121,26 @@
   el.difficultyCancel.addEventListener('click', closeDifficultySelector);
   el.difficulty.addEventListener('click', event => {
     if (event.target === el.difficulty && hasStartedGame) closeDifficultySelector();
+  });
+
+
+  el.closeDailyCalendar.addEventListener('click', closeDailyCalendar);
+  el.dailyCalendar.addEventListener('click', event => {
+    if (event.target === el.dailyCalendar) closeDailyCalendar();
+  });
+  el.calendarPrev.addEventListener('click', () => changeCalendarMonth(-1));
+  el.calendarNext.addEventListener('click', () => changeCalendarMonth(1));
+  document.querySelectorAll('[data-daily-difficulty]').forEach(button => {
+    button.addEventListener('click', () => {
+      startSelectedDaily(button.dataset.dailyDifficulty);
+    });
+  });
+  el.exportDailyProgress.addEventListener('click', exportDailyProgressFile);
+  el.importDailyProgress.addEventListener('click', () => {
+    el.importDailyProgressInput.click();
+  });
+  el.importDailyProgressInput.addEventListener('change', () => {
+    importDailyProgressFile(el.importDailyProgressInput.files?.[0]);
   });
 
   el.copyCode.addEventListener('click', copyCurrentDealCode);
@@ -2226,6 +3167,7 @@
 
   (async () => {
     await preloadAllCardImages();
+    ensureAllEarnedTrophies();
     updateDifficultyUI();
     if (!restore()) openDifficultySelector(true, 'random');
   })();
