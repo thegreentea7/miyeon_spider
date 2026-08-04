@@ -700,11 +700,15 @@
 
 
     .daily-calendar-card{
-      width:min(790px,calc(100vw - 24px));
-      max-height:min(92vh,880px);
-      overflow:auto;
-      padding:22px;
+      width:min(1240px,calc(100vw - 28px));
+      height:min(92vh,860px);
+      max-height:min(92vh,860px);
+      overflow:hidden;
+      padding:24px;
       text-align:left;
+      display:grid;
+      grid-template-rows:auto 1fr;
+      gap:18px;
     }
 
     .daily-calendar-top{
@@ -738,10 +742,10 @@
 
     .calendar-summary{
       display:grid;
-      grid-template-columns:minmax(0,1fr) auto;
+      grid-template-columns:1fr;
       gap:12px;
       align-items:stretch;
-      margin-bottom:14px;
+      margin-bottom:0;
     }
 
     .calendar-progress-card,
@@ -805,12 +809,100 @@
     }
 
     .calendar-panel{
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(360px,.8fr);
+      gap:16px;
+      min-height:0;
       border:1px solid rgba(87,62,83,.1);
-      border-radius:20px;
+      border-radius:22px;
       background:rgba(255,255,255,.76);
-      padding:13px;
+      padding:16px;
       box-shadow:0 9px 26px rgba(86,57,82,.08);
+      overflow:hidden;
     }
+
+    .daily-calendar-content{
+      min-height:0;
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(360px,.8fr);
+      gap:16px;
+    }
+
+    .calendar-main{
+      min-width:0;
+      min-height:0;
+      display:grid;
+      grid-template-rows:auto auto 1fr;
+      gap:10px;
+      border:1px solid rgba(87,62,83,.08);
+      border-radius:18px;
+      background:rgba(255,255,255,.62);
+      padding:12px;
+    }
+
+    .calendar-side{
+      min-width:0;
+      min-height:0;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      overflow:auto;
+      padding-right:2px;
+    }
+
+    .calendar-side-top{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+
+    .daily-selected-panel{
+      margin-top:0;
+      padding:16px;
+      border-radius:18px;
+      background:linear-gradient(145deg,rgba(247,234,244,.88),rgba(236,230,250,.9));
+      border:1px solid rgba(91,64,87,.09);
+    }
+
+    .daily-difficulty-buttons{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .daily-difficulty-buttons .btn{
+      min-height:42px;
+      padding-inline:10px;
+      white-space:nowrap;
+      justify-content:center;
+    }
+
+    .daily-tools{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:flex-start;
+      margin-top:0;
+    }
+
+    .daily-tools-note{
+      flex:1 1 220px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.4;
+    }
+
+    .trophy-section{
+      margin-top:0;
+      padding-top:14px;
+      border-top:1px solid rgba(87,62,83,.1);
+    }
+
+    .calendar-grid{
+      align-content:start;
+    }
+
+
 
     .calendar-nav{
       display:grid;
@@ -1205,6 +1297,190 @@
       .stock{width:82px;height:60px}
       .stock-card{width:49px;height:60px}
     }
+
+
+    /* FINAL: полноэкранный календарь ежедневок */
+    #dailyCalendarModal{
+      padding:12px;
+    }
+
+    #dailyCalendarModal .daily-calendar-card{
+      width:min(1280px,calc(100vw - 24px)) !important;
+      height:min(900px,calc(100vh - 24px)) !important;
+      max-width:none !important;
+      max-height:none !important;
+      overflow:hidden !important;
+      padding:24px !important;
+      display:grid !important;
+      grid-template-rows:auto minmax(0,1fr) !important;
+      gap:16px !important;
+      text-align:left !important;
+      border-radius:26px !important;
+    }
+
+    #dailyCalendarModal .daily-calendar-top{
+      margin:0;
+      min-height:0;
+      align-items:flex-start;
+    }
+
+    #dailyCalendarModal .daily-calendar-title h2{
+      margin:0 0 6px;
+      font-size:30px;
+      line-height:1.08;
+    }
+
+    #dailyCalendarModal .daily-calendar-title p{
+      margin:0;
+      max-width:720px;
+      line-height:1.45;
+    }
+
+    #dailyCalendarModal .daily-calendar-content{
+      min-width:0;
+      min-height:0;
+      display:grid !important;
+      grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr) !important;
+      gap:16px !important;
+      overflow:hidden;
+    }
+
+    #dailyCalendarModal .calendar-main{
+      min-width:0;
+      min-height:0;
+      height:100%;
+      display:grid !important;
+      grid-template-rows:auto auto minmax(0,1fr) !important;
+      gap:10px;
+      padding:16px;
+      border:1px solid rgba(87,62,83,.1);
+      border-radius:20px;
+      background:rgba(255,255,255,.72);
+      overflow:hidden;
+    }
+
+    #dailyCalendarModal .calendar-nav{
+      margin:0;
+    }
+
+    #dailyCalendarModal .calendar-weekdays{
+      margin:0;
+    }
+
+    #dailyCalendarModal .calendar-grid{
+      min-width:0;
+      min-height:0;
+      height:100%;
+      display:grid !important;
+      grid-template-columns:repeat(7,minmax(0,1fr)) !important;
+      grid-template-rows:repeat(6,minmax(0,1fr));
+      gap:7px !important;
+      align-content:stretch !important;
+    }
+
+    #dailyCalendarModal .calendar-day,
+    #dailyCalendarModal .calendar-day-placeholder{
+      min-width:0;
+      min-height:0 !important;
+      height:auto;
+    }
+
+    #dailyCalendarModal .calendar-day{
+      padding:8px;
+      border-radius:14px;
+    }
+
+    #dailyCalendarModal .calendar-side{
+      min-width:0;
+      min-height:0;
+      height:100%;
+      display:flex !important;
+      flex-direction:column;
+      gap:12px;
+      overflow:hidden !important;
+      padding:0;
+    }
+
+    #dailyCalendarModal .calendar-summary{
+      display:grid !important;
+      grid-template-columns:1fr !important;
+      gap:10px !important;
+      margin:0 !important;
+    }
+
+    #dailyCalendarModal .calendar-progress-card,
+    #dailyCalendarModal .calendar-trophy-card,
+    #dailyCalendarModal .daily-selected-panel{
+      padding:14px;
+      border-radius:17px;
+    }
+
+    #dailyCalendarModal .daily-selected-panel{
+      margin:0 !important;
+    }
+
+    #dailyCalendarModal .daily-difficulty-buttons{
+      display:grid !important;
+      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+      gap:8px !important;
+    }
+
+    #dailyCalendarModal .daily-difficulty-buttons .btn{
+      min-width:0;
+      padding:10px 6px;
+      white-space:nowrap;
+    }
+
+    #dailyCalendarModal .daily-tools{
+      margin:0 !important;
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      gap:8px !important;
+      align-items:start;
+    }
+
+    #dailyCalendarModal .daily-tools .btn{
+      width:100%;
+      white-space:nowrap;
+    }
+
+    #dailyCalendarModal .daily-tools-note{
+      grid-column:1 / -1;
+      margin:0;
+    }
+
+    #dailyCalendarModal .trophy-section{
+      margin-top:auto !important;
+      padding-top:12px !important;
+      max-height:150px;
+      overflow:auto;
+    }
+
+    #dailyCalendarModal .trophy-section h3{
+      margin:0 0 8px;
+    }
+
+    @media(max-width:700px){
+      #dailyCalendarModal .daily-calendar-card{
+        width:calc(100vw - 12px) !important;
+        height:calc(100vh - 12px) !important;
+        padding:16px !important;
+        overflow:auto !important;
+      }
+
+      #dailyCalendarModal .daily-calendar-content{
+        grid-template-columns:1fr !important;
+        overflow:visible;
+      }
+
+      #dailyCalendarModal .calendar-main{
+        min-height:600px;
+      }
+
+      #dailyCalendarModal .calendar-side{
+        overflow:visible !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1290,63 +1566,67 @@
         <button class="btn calendar-close" type="button" id="closeDailyCalendarBtn" aria-label="Закрыть">×</button>
       </div>
 
-      <div class="calendar-summary">
-        <div class="calendar-progress-card">
-          <strong id="calendarProgressTitle">Прогресс месяца</strong>
-          <div class="calendar-progress-track">
-            <div class="calendar-progress-fill" id="calendarProgressFill"></div>
+      <div class="daily-calendar-content">
+        <div class="calendar-main">
+          <div class="calendar-nav">
+            <button class="btn" type="button" id="calendarPrevBtn" aria-label="Предыдущий месяц">‹</button>
+            <div class="calendar-month-title" id="calendarMonthTitle"></div>
+            <button class="btn" type="button" id="calendarNextBtn" aria-label="Следующий месяц">›</button>
           </div>
-          <span class="calendar-progress-caption" id="calendarProgressCaption">0 / 31 дней</span>
-        </div>
 
-        <div class="calendar-trophy-card">
-          <div class="calendar-trophy-icon" id="calendarTrophyIcon">♡</div>
-          <div>
-            <b id="calendarTrophyTitle">Кубок месяца</b>
-            <span id="calendarTrophyCaption">Закрой все дни</span>
+          <div class="calendar-weekdays" aria-hidden="true">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
           </div>
-        </div>
-      </div>
-
-      <div class="calendar-panel">
-        <div class="calendar-nav">
-          <button class="btn" type="button" id="calendarPrevBtn" aria-label="Предыдущий месяц">‹</button>
-          <div class="calendar-month-title" id="calendarMonthTitle"></div>
-          <button class="btn" type="button" id="calendarNextBtn" aria-label="Следующий месяц">›</button>
+          <div class="calendar-grid" id="calendarGrid"></div>
         </div>
 
-        <div class="calendar-weekdays" aria-hidden="true">
-          <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
-        </div>
-        <div class="calendar-grid" id="calendarGrid"></div>
-
-        <div class="daily-selected-panel" id="dailySelectedPanel">
-          <div class="daily-selected-header">
-            <div>
-              <strong id="dailySelectedTitle">Выбери день</strong>
-              <div class="daily-selected-meta" id="dailySelectedMeta">Можно выбрать сегодняшний или любой пропущенный день.</div>
+        <div class="calendar-side">
+          <div class="calendar-summary">
+            <div class="calendar-progress-card">
+              <strong id="calendarProgressTitle">Прогресс месяца</strong>
+              <div class="calendar-progress-track">
+                <div class="calendar-progress-fill" id="calendarProgressFill"></div>
+              </div>
+              <span class="calendar-progress-caption" id="calendarProgressCaption">0 / 31 дней</span>
             </div>
-            <span class="daily-completed-badge" id="dailyCompletedBadge" hidden>♥ Пройдено</span>
+
+            <div class="calendar-trophy-card">
+              <div class="calendar-trophy-icon" id="calendarTrophyIcon">♡</div>
+              <div>
+                <b id="calendarTrophyTitle">Кубок месяца</b>
+                <span id="calendarTrophyCaption">Закрой все дни</span>
+              </div>
+            </div>
           </div>
 
-          <span class="daily-difficulty-label">Выбери сложность:</span>
-          <div class="daily-difficulty-buttons">
-            <button class="btn" type="button" data-daily-difficulty="easy"><span class="heart">♥</span> Лёгкий</button>
-            <button class="btn" type="button" data-daily-difficulty="medium"><span class="heart">♥</span><span class="spade">♠</span> Средний</button>
-            <button class="btn" type="button" data-daily-difficulty="hard"><span class="heart">♥</span><span class="spade">♠</span><span class="diamond">♦</span><span class="club">♣</span> Сложный</button>
+          <div class="daily-selected-panel" id="dailySelectedPanel">
+            <div class="daily-selected-header">
+              <div>
+                <strong id="dailySelectedTitle">Выбери день</strong>
+                <div class="daily-selected-meta" id="dailySelectedMeta">Можно выбрать сегодняшний или любой пропущенный день.</div>
+              </div>
+              <span class="daily-completed-badge" id="dailyCompletedBadge" hidden>♥ Пройдено</span>
+            </div>
+
+            <span class="daily-difficulty-label">Выбери сложность:</span>
+            <div class="daily-difficulty-buttons">
+              <button class="btn" type="button" data-daily-difficulty="easy">Лёгкий</button>
+              <button class="btn" type="button" data-daily-difficulty="medium">Средний</button>
+              <button class="btn" type="button" data-daily-difficulty="hard">Сложный</button>
+            </div>
           </div>
-        </div>
 
-        <div class="daily-tools">
-          <button class="btn" type="button" id="exportDailyProgressBtn">Экспорт прогресса</button>
-          <button class="btn" type="button" id="importDailyProgressBtn">Импорт прогресса</button>
-          <input id="importDailyProgressInput" type="file" accept="application/json,.json" hidden>
-          <span class="daily-tools-note">Прогресс хранится в этом браузере. Экспорт пригодится для переноса на другое устройство или восстановления после очистки данных.</span>
-        </div>
+          <div class="daily-tools">
+            <button class="btn" type="button" id="exportDailyProgressBtn">Экспорт прогресса</button>
+            <button class="btn" type="button" id="importDailyProgressBtn">Импорт прогресса</button>
+            <input id="importDailyProgressInput" type="file" accept="application/json,.json" hidden>
+            <span class="daily-tools-note">Прогресс хранится в этом браузере. Экспорт пригодится для переноса на другое устройство или восстановления после очистки данных.</span>
+          </div>
 
-        <div class="trophy-section">
-          <h3>Мои кубки</h3>
-          <div class="trophy-list" id="trophyList"></div>
+          <div class="trophy-section">
+            <h3>Мои кубки</h3>
+            <div class="trophy-list" id="trophyList"></div>
+          </div>
         </div>
       </div>
     </div>
