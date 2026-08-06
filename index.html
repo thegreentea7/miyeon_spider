@@ -408,7 +408,7 @@
     .completed-zone{
       position:fixed;
       right:132px;
-      bottom:calc(24px + env(safe-area-inset-bottom));
+      bottom:calc(92px + env(safe-area-inset-bottom));
       display:flex;
       gap:5px;
       z-index:5;
@@ -1481,6 +1481,403 @@
         overflow:visible !important;
       }
     }
+  
+    /* Умные подсказки */
+    .stock.hint-stock{
+      outline:3px solid rgba(255,255,255,.96);
+      outline-offset:5px;
+      border-radius:12px;
+      filter:drop-shadow(0 0 8px rgba(255,255,255,.9));
+    }
+
+    /* Несколько сохранённых партий */
+    #savedGamesModal{
+      padding:12px;
+    }
+
+    #savedGamesModal .saves-card{
+      width:min(980px,calc(100vw - 24px)) !important;
+      max-width:none !important;
+      max-height:min(88vh,760px) !important;
+      overflow:auto !important;
+      padding:24px !important;
+      text-align:left !important;
+      border-radius:24px !important;
+    }
+
+    .saves-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .saves-title h2{
+      margin:0 0 6px;
+      font-size:28px;
+    }
+
+    .saves-title p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .saves-close{
+      width:42px;
+      height:42px;
+      flex:0 0 auto;
+      padding:0;
+      border-radius:50%;
+      font-size:20px;
+    }
+
+    .saves-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .save-slot{
+      min-width:0;
+      padding:16px;
+      border:1px solid rgba(87,62,83,.1);
+      border-radius:19px;
+      background:
+        radial-gradient(circle at 88% 8%,rgba(255,255,255,.92),transparent 28%),
+        linear-gradient(145deg,rgba(255,255,255,.94),rgba(246,234,245,.9));
+      box-shadow:0 8px 22px rgba(86,57,82,.09);
+    }
+
+    .save-slot.empty{
+      background:rgba(255,255,255,.66);
+    }
+
+    .save-slot-number{
+      display:block;
+      margin-bottom:10px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+
+    .save-slot h3{
+      margin:0 0 5px;
+      font-size:18px;
+    }
+
+    .save-slot-kind{
+      min-height:18px;
+      margin-bottom:11px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .save-slot-stats{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:7px;
+      margin-bottom:12px;
+    }
+
+    .save-stat{
+      padding:8px 9px;
+      border-radius:12px;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(87,62,83,.07);
+    }
+
+    .save-stat b{
+      display:block;
+      font-size:14px;
+    }
+
+    .save-stat span{
+      display:block;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:9px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .save-slot-date{
+      min-height:31px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.4;
+    }
+
+    .save-slot-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:12px;
+    }
+
+    .save-slot-actions .btn{
+      flex:1 1 auto;
+      padding:8px 9px;
+      font-size:12px;
+    }
+
+    .save-slot-actions .danger{
+      flex:0 0 auto;
+      color:#a34e69;
+    }
+
+    .save-empty-text{
+      min-height:116px;
+      display:grid;
+      place-items:center;
+      color:var(--muted);
+      text-align:center;
+      line-height:1.45;
+    }
+
+    @media(max-width:860px){
+      .topbar{
+        flex-wrap:wrap;
+      }
+
+      .controls{
+        order:3;
+        width:100%;
+        overflow-x:auto;
+        padding-bottom:3px;
+      }
+
+      .controls .btn{
+        flex:0 0 auto;
+        white-space:nowrap;
+      }
+
+      .saves-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+  
+    /* Панель остаётся доступной даже при большом количестве кнопок */
+    .controls{
+      overflow-x:auto;
+      scrollbar-width:none;
+    }
+
+    .controls::-webkit-scrollbar{
+      display:none;
+    }
+
+    .controls .btn{
+      flex:0 0 auto;
+      white-space:nowrap;
+    }
+
+    @media(max-width:1400px){
+      .topbar{
+        flex-wrap:wrap;
+      }
+
+      .controls{
+        order:3;
+        width:100%;
+      }
+    }
+
+  
+    /* Компактная верхняя панель и меню «Ещё» */
+    .controls{
+      overflow:visible;
+    }
+
+    .more-wrap{
+      position:relative;
+      flex:0 0 auto;
+    }
+
+    .more-menu{
+      position:absolute;
+      top:calc(100% + 9px);
+      right:0;
+      width:245px;
+      display:none;
+      padding:8px;
+      border:1px solid rgba(87,62,83,.11);
+      border-radius:17px;
+      background:rgba(255,255,255,.96);
+      box-shadow:0 18px 44px rgba(65,43,61,.22);
+      backdrop-filter:blur(18px);
+      z-index:80;
+    }
+
+    .more-menu.show{display:block}
+
+    .more-item{
+      width:100%;
+      display:flex;
+      align-items:center;
+      gap:9px;
+      border:0;
+      border-radius:11px;
+      padding:10px 11px;
+      background:transparent;
+      color:var(--ink);
+      text-align:left;
+      transition:.15s ease;
+    }
+
+    .more-item:hover:not(:disabled){background:rgba(239,220,237,.66)}
+    .more-item:disabled{opacity:.42;cursor:not-allowed}
+
+    .more-divider{
+      height:1px;
+      margin:6px 5px;
+      background:rgba(87,62,83,.1);
+    }
+
+    .time-pill{
+      border:1px solid rgba(255,255,255,.9);
+      color:var(--ink);
+      cursor:pointer;
+    }
+
+    .time-pill:hover{background:#fff;transform:translateY(-1px)}
+
+    /* Плавающее автозавершение */
+    .auto-complete-notice{
+      position:fixed;
+      left:50%;
+      bottom:calc(24px + env(safe-area-inset-bottom));
+      transform:translateX(-50%);
+      z-index:40;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:9px 10px 9px 14px;
+      border:1px solid rgba(255,255,255,.9);
+      border-radius:999px;
+      background:rgba(255,255,255,.93);
+      box-shadow:0 12px 32px rgba(65,43,61,.2);
+      backdrop-filter:blur(14px);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .auto-complete-notice .btn{padding:7px 11px}
+
+    /* Пауза */
+    #pauseModal{z-index:130}
+    #pauseModal .pause-card{
+      width:min(430px,calc(100vw - 28px)) !important;
+      padding:32px !important;
+    }
+    .pause-icon{font-size:48px;line-height:1}
+    .pause-time{margin:10px 0 20px;font-size:29px;font-weight:900}
+
+    /* Настройки */
+    #settingsModal,#statisticsModal{padding:12px}
+    #settingsModal .settings-card,
+    #statisticsModal .statistics-card{
+      width:min(760px,calc(100vw - 24px)) !important;
+      max-width:none !important;
+      max-height:min(88vh,780px) !important;
+      overflow:auto !important;
+      padding:24px !important;
+      text-align:left !important;
+    }
+
+    .panel-modal-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      margin-bottom:18px;
+    }
+    .panel-modal-top h2{margin:0 0 5px;font-size:27px}
+    .panel-modal-top p{margin:0;color:var(--muted);line-height:1.45}
+    .round-close{width:42px;height:42px;flex:0 0 auto;padding:0;border-radius:50%;font-size:20px}
+
+    .settings-list{display:grid;gap:10px}
+    .setting-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      padding:13px 14px;
+      border:1px solid rgba(87,62,83,.09);
+      border-radius:15px;
+      background:rgba(249,241,248,.72);
+    }
+    .setting-copy strong{display:block;font-size:14px}
+    .setting-copy span{display:block;margin-top:3px;color:var(--muted);font-size:11px;line-height:1.4}
+    .setting-row input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
+    .setting-row select{
+      min-width:155px;
+      border:1px solid rgba(87,62,83,.15);
+      border-radius:11px;
+      padding:8px 10px;
+      background:#fff;
+      color:var(--ink);
+    }
+    .settings-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+
+    body.setting-large-cards{
+      --card-w:128px;
+      --card-h:184px;
+      --gap-face:46px;
+      --gap-down:20px;
+    }
+    body.setting-large-suits .corner{font-size:18px}
+    body.setting-large-suits .suit{font-size:22px}
+
+    body.back-light .card.face-down,
+    body.back-light .stock-card{
+      background:
+        linear-gradient(45deg,rgba(197,132,177,.13) 25%,transparent 25%,transparent 75%,rgba(197,132,177,.13) 75%),
+        linear-gradient(135deg,#fff5fb,#eadff6);
+      background-size:12px 12px,auto;
+      border-color:rgba(161,104,148,.25);
+      color:#9b638b;
+    }
+    body.back-light .card.face-down::before{color:#8b5b80;text-shadow:none;border-color:rgba(151,92,136,.28)}
+
+    body.back-dark .card.face-down,
+    body.back-dark .stock-card{
+      background:
+        linear-gradient(45deg,rgba(255,255,255,.08) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.08) 75%),
+        linear-gradient(135deg,#5b3e60,#2f2939);
+      background-size:12px 12px,auto;
+    }
+
+    /* Статистика */
+    .stats-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+    .stats-box{padding:14px;border-radius:16px;background:linear-gradient(145deg,#fff,#f6eaf4);border:1px solid rgba(87,62,83,.08);text-align:center}
+    .stats-box b{display:block;font-size:22px}
+    .stats-box span{display:block;margin-top:4px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+    .difficulty-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .difficulty-stat-card{padding:15px;border:1px solid rgba(87,62,83,.09);border-radius:17px;background:rgba(249,241,248,.72)}
+    .difficulty-stat-card h3{margin:0 0 10px;font-size:16px}
+    .difficulty-stat-line{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid rgba(87,62,83,.07);font-size:12px}
+    .difficulty-stat-line:last-child{border-bottom:0}
+
+    @media(max-width:900px){
+      .controls{overflow-x:auto;scrollbar-width:none}
+      .controls::-webkit-scrollbar{display:none}
+      .controls .btn{flex:0 0 auto;white-space:nowrap}
+      .more-menu{position:fixed;top:72px;right:12px}
+      .stats-overview{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .difficulty-stats{grid-template-columns:1fr}
+    }
+
+  
+    /* Плашка автозавершения скрыта; функция остаётся в меню «Ещё» */
+    #autoCompleteNotice{
+      display:none !important;
+    }
+
   </style>
 </head>
 <body>
@@ -1490,23 +1887,35 @@
     <header class="topbar">
       <div class="brand">
         <strong>MY, collection</strong>
-        <span id="modeLabel">Miyeon Spider Solitaire · Средний режим</span>
       </div>
 
       <div class="controls">
         <button class="btn primary" id="newGameBtn">Новая игра</button>
         <button class="btn" id="dailyGameBtn">☀ Ежедневная</button>
-        <button class="btn" id="dealCodeBtn"># Код раскладки</button>
-        <button class="btn" id="autoCompleteBtn" disabled>Автозавершить</button>
         <button class="btn" id="undoBtn">↶ Отменить</button>
         <button class="btn" id="hintBtn">✦ Подсказка</button>
-        <button class="btn" id="helpBtn">Правила</button>
+
+        <div class="more-wrap" id="moreWrap">
+          <button class="btn" id="moreMenuBtn" type="button" aria-expanded="false">••• Ещё</button>
+          <div class="more-menu" id="moreMenu" role="menu">
+            <button class="more-item" id="pauseMenuBtn" type="button">Ⅱ Пауза</button>
+            <button class="more-item" id="restartGameBtn" type="button">⟳ Перезапустить</button>
+            <button class="more-item" id="savedGamesBtn" type="button">▣ Сохранённые партии</button>
+            <button class="more-item" id="dealCodeBtn" type="button"># Код раскладки</button>
+            <button class="more-item" id="autoCompleteBtn" type="button" disabled>✦ Автозавершить</button>
+            <div class="more-divider"></div>
+            <button class="more-item" id="statisticsBtn" type="button">⌁ Статистика</button>
+            <button class="more-item" id="settingsBtn" type="button">⚙ Настройки</button>
+            <button class="more-item" id="helpBtn" type="button">? Правила</button>
+          </div>
+        </div>
       </div>
 
       <div class="stats">
         <div class="pill"><b id="movesValue">0</b><span>ходы</span></div>
-        <div class="pill"><b id="timeValue">00:00</b><span>время</span></div>
-        <div class="pill"><b id="setsValue">0 / 8</b><span>серии</span></div>
+        <button class="pill time-pill" id="timePill" type="button" title="Поставить игру на паузу">
+          <b id="timeValue">00:00</b><span>время</span>
+        </button>
       </div>
     </header>
 
@@ -1525,6 +1934,11 @@
   </main>
 
   <div class="toast" id="toast"></div>
+
+  <div class="auto-complete-notice" id="autoCompleteNotice" hidden>
+    <span>✦ Можно завершить партию автоматически</span>
+    <button class="btn primary" id="autoCompleteNoticeBtn" type="button">Завершить</button>
+  </div>
 
 
   <div class="modal" id="difficultyModal">
@@ -1632,6 +2046,95 @@
     </div>
   </div>
 
+
+  <div class="modal" id="pauseModal">
+    <div class="modal-card pause-card">
+      <div class="pause-icon">Ⅱ</div>
+      <h2>Пауза</h2>
+      <div class="pause-time" id="pauseTimeValue">00:00</div>
+      <button class="btn primary" id="resumeGameBtn" type="button">Продолжить игру</button>
+    </div>
+  </div>
+
+  <div class="modal" id="settingsModal">
+    <div class="modal-card settings-card">
+      <div class="panel-modal-top">
+        <div>
+          <h2>Настройки</h2>
+          <p>Изменения сохраняются в этом браузере.</p>
+        </div>
+        <button class="btn round-close" id="closeSettingsBtn" type="button">×</button>
+      </div>
+
+      <div class="settings-list">
+        <label class="setting-row">
+          <span class="setting-copy"><strong>Звуки</strong><span>Тихие звуки ходов, раздачи и победы.</span></span>
+          <input id="settingSounds" type="checkbox">
+        </label>
+        <label class="setting-row">
+          <span class="setting-copy"><strong>Анимация победы</strong><span>Прыгающие карты перед итоговым окном.</span></span>
+          <input id="settingVictoryAnimation" type="checkbox">
+        </label>
+        <label class="setting-row">
+          <span class="setting-copy"><strong>Подтверждать перезапуск</strong><span>Спрашивать перед сбросом текущих ходов.</span></span>
+          <input id="settingConfirmRestart" type="checkbox">
+        </label>
+        <label class="setting-row">
+          <span class="setting-copy"><strong>Увеличенные карты</strong><span>Карты становятся крупнее, когда ширина экрана позволяет.</span></span>
+          <input id="settingLargeCards" type="checkbox">
+        </label>
+        <label class="setting-row">
+          <span class="setting-copy"><strong>Крупные масти</strong><span>Увеличивает обозначения ранга и масти в углах.</span></span>
+          <input id="settingLargeSuits" type="checkbox">
+        </label>
+        <label class="setting-row">
+          <span class="setting-copy"><strong>Рубашка карт</strong><span>Выбери оформление закрытых карт и колоды.</span></span>
+          <select id="settingCardBack">
+            <option value="classic">Розовая</option>
+            <option value="light">Светлая</option>
+            <option value="dark">Тёмная</option>
+          </select>
+        </label>
+      </div>
+      <div class="settings-footer">
+        <button class="btn" id="resetSettingsBtn" type="button">Сбросить настройки</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="statisticsModal">
+    <div class="modal-card statistics-card">
+      <div class="panel-modal-top">
+        <div>
+          <h2>Статистика</h2>
+          <p>Результаты считаются с момента установки этой версии.</p>
+        </div>
+        <button class="btn round-close" id="closeStatisticsBtn" type="button">×</button>
+      </div>
+      <div class="stats-overview">
+        <div class="stats-box"><b id="statGames">0</b><span>партий</span></div>
+        <div class="stats-box"><b id="statWins">0</b><span>побед</span></div>
+        <div class="stats-box"><b id="statWinRate">0%</b><span>процент побед</span></div>
+        <div class="stats-box"><b id="statDailies">0</b><span>ежедневок</span></div>
+      </div>
+      <div class="difficulty-stats" id="difficultyStats"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="savedGamesModal">
+    <div class="modal-card saves-card">
+      <div class="saves-top">
+        <div class="saves-title">
+          <h2>Сохранённые партии</h2>
+          <p>Сохрани текущую игру в один из трёх слотов и вернись к ней позже.</p>
+        </div>
+        <button class="btn saves-close" type="button" id="closeSavedGamesBtn" aria-label="Закрыть">×</button>
+      </div>
+
+      <div class="saves-grid" id="savedGamesGrid"></div>
+    </div>
+  </div>
+
   <div class="modal" id="dealCodeModal">
     <div class="modal-card code-card">
       <div class="big">#</div>
@@ -1689,6 +2192,9 @@
         <li>В календаре можно пройти сегодняшний или любой пропущенный день. Будущие даты закрыты.</li>
         <li>День считается закрытым после победы на любой сложности. За все дни месяца выдаётся кубок.</li>
         <li>Код раскладки позволяет повторить ту же самую партию.</li>
+        <li>Умная подсказка сначала ищет ход, который откроет карту, продолжит масть или завершит серию.</li>
+        <li>В разделе «Партии» можно сохранить до трёх незавершённых игр.</li>
+        <li>Кнопка «Перезапустить» начинает текущую раскладку заново с тем же расположением карт.</li>
       </ul>
       <p style="color:#7c6d79">Управление: нажми на карту или серию, затем — на столбец назначения. Также работает перетаскивание мышью.</p>
       <button class="btn primary" id="closeHelpBtn">Понятно</button>
@@ -1733,6 +2239,9 @@
   let calendarViewDate = new Date();
   calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth(), 1);
   let lastAwardedTrophyKey = '';
+  let isPaused = false;
+  let currentGameFinished = false;
+  let audioContext = null;
 
   const el = {
     game: document.getElementById('game'),
@@ -1780,12 +2289,49 @@
     exportDailyProgress: document.getElementById('exportDailyProgressBtn'),
     importDailyProgress: document.getElementById('importDailyProgressBtn'),
     importDailyProgressInput: document.getElementById('importDailyProgressInput'),
-    monthlyTrophyNotice: document.getElementById('monthlyTrophyNotice')
+    monthlyTrophyNotice: document.getElementById('monthlyTrophyNotice'),
+    restartGame: document.getElementById('restartGameBtn'),
+    savedGames: document.getElementById('savedGamesBtn'),
+    savedGamesModal: document.getElementById('savedGamesModal'),
+    closeSavedGames: document.getElementById('closeSavedGamesBtn'),
+    savedGamesGrid: document.getElementById('savedGamesGrid'),
+    moreWrap: document.getElementById('moreWrap'),
+    moreMenuBtn: document.getElementById('moreMenuBtn'),
+    moreMenu: document.getElementById('moreMenu'),
+    pauseMenu: document.getElementById('pauseMenuBtn'),
+    timePill: document.getElementById('timePill'),
+    pauseModal: document.getElementById('pauseModal'),
+    pauseTime: document.getElementById('pauseTimeValue'),
+    resumeGame: document.getElementById('resumeGameBtn'),
+    settings: document.getElementById('settingsBtn'),
+    settingsModal: document.getElementById('settingsModal'),
+    closeSettings: document.getElementById('closeSettingsBtn'),
+    resetSettings: document.getElementById('resetSettingsBtn'),
+    settingSounds: document.getElementById('settingSounds'),
+    settingVictoryAnimation: document.getElementById('settingVictoryAnimation'),
+    settingConfirmRestart: document.getElementById('settingConfirmRestart'),
+    settingLargeCards: document.getElementById('settingLargeCards'),
+    settingLargeSuits: document.getElementById('settingLargeSuits'),
+    settingCardBack: document.getElementById('settingCardBack'),
+    statistics: document.getElementById('statisticsBtn'),
+    statisticsModal: document.getElementById('statisticsModal'),
+    closeStatistics: document.getElementById('closeStatisticsBtn'),
+    statGames: document.getElementById('statGames'),
+    statWins: document.getElementById('statWins'),
+    statWinRate: document.getElementById('statWinRate'),
+    statDailies: document.getElementById('statDailies'),
+    difficultyStats: document.getElementById('difficultyStats'),
+    autoCompleteNotice: document.getElementById('autoCompleteNotice'),
+    autoCompleteNoticeBtn: document.getElementById('autoCompleteNoticeBtn')
   };
 
 
   const DAILY_PROGRESS_KEY = 'miyeonSpiderDailyProgressV1';
   const DAILY_START_DATE_KEY = '20260801';
+  const GAME_SLOTS_KEY = 'miyeonSpiderGameSlotsV1';
+  const GAME_SLOT_COUNT = 3;
+  const GAME_SETTINGS_KEY = 'miyeonSpiderSettingsV1';
+  const GAME_STATS_KEY = 'miyeonSpiderStatsV1';
   const MONTH_NAMES = [
     'январь','февраль','март','апрель','май','июнь',
     'июль','август','сентябрь','октябрь','ноябрь','декабрь'
@@ -1794,6 +2340,129 @@
     'января','февраля','марта','апреля','мая','июня',
     'июля','августа','сентября','октября','ноября','декабря'
   ];
+
+  function defaultGameSettings() {
+    return {
+      sounds:false,
+      victoryAnimation:true,
+      confirmRestart:true,
+      largeCards:false,
+      largeSuits:false,
+      cardBack:'classic'
+    };
+  }
+
+  function loadGameSettings() {
+    try {
+      return {...defaultGameSettings(), ...JSON.parse(localStorage.getItem(GAME_SETTINGS_KEY) || '{}')};
+    } catch {
+      return defaultGameSettings();
+    }
+  }
+
+  function saveGameSettings() {
+    localStorage.setItem(GAME_SETTINGS_KEY, JSON.stringify(gameSettings));
+  }
+
+  function applyGameSettings(shouldRender = true) {
+    document.body.classList.toggle('setting-large-cards', Boolean(gameSettings.largeCards));
+    document.body.classList.toggle('setting-large-suits', Boolean(gameSettings.largeSuits));
+    document.body.classList.remove('back-light','back-dark');
+    if (gameSettings.cardBack === 'light') document.body.classList.add('back-light');
+    if (gameSettings.cardBack === 'dark') document.body.classList.add('back-dark');
+
+    el.settingSounds.checked = Boolean(gameSettings.sounds);
+    el.settingVictoryAnimation.checked = Boolean(gameSettings.victoryAnimation);
+    el.settingConfirmRestart.checked = Boolean(gameSettings.confirmRestart);
+    el.settingLargeCards.checked = Boolean(gameSettings.largeCards);
+    el.settingLargeSuits.checked = Boolean(gameSettings.largeSuits);
+    el.settingCardBack.value = ['classic','light','dark'].includes(gameSettings.cardBack)
+      ? gameSettings.cardBack
+      : 'classic';
+
+    if (shouldRender && hasStartedGame) render();
+  }
+
+  function playSound(kind = 'move') {
+    if (!gameSettings.sounds) return;
+    try {
+      const Context = window.AudioContext || window.webkitAudioContext;
+      if (!Context) return;
+      audioContext ||= new Context();
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const frequencies = {move:430, deal:330, complete:620, win:760};
+      const duration = kind === 'win' ? .18 : .075;
+      oscillator.frequency.value = frequencies[kind] || 430;
+      oscillator.type = 'sine';
+      gain.gain.setValueAtTime(.0001, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.045, audioContext.currentTime + .01);
+      gain.gain.exponentialRampToValueAtTime(.0001, audioContext.currentTime + duration);
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + duration + .02);
+    } catch {}
+  }
+
+  function emptyGameStats() {
+    const mode = () => ({started:0,wins:0,bestTime:null,minMoves:null});
+    return {version:1, started:0, wins:0, byDifficulty:{easy:mode(),medium:mode(),hard:mode()}};
+  }
+
+  function loadGameStats() {
+    try {
+      const base = emptyGameStats();
+      const stored = JSON.parse(localStorage.getItem(GAME_STATS_KEY) || '{}');
+      base.started = Number(stored.started) || 0;
+      base.wins = Number(stored.wins) || 0;
+      for (const difficulty of ['easy','medium','hard']) {
+        const source = stored.byDifficulty?.[difficulty] || {};
+        base.byDifficulty[difficulty] = {
+          started:Number(source.started) || 0,
+          wins:Number(source.wins) || 0,
+          bestTime:Number.isFinite(source.bestTime) ? source.bestTime : null,
+          minMoves:Number.isFinite(source.minMoves) ? source.minMoves : null
+        };
+      }
+      return base;
+    } catch {
+      return emptyGameStats();
+    }
+  }
+
+  function saveGameStats() {
+    localStorage.setItem(GAME_STATS_KEY, JSON.stringify(gameStats));
+  }
+
+  function recordGameStart() {
+    gameStats.started++;
+    gameStats.byDifficulty[currentDifficulty].started++;
+    saveGameStats();
+  }
+
+  function recordGameWinStats() {
+    gameStats.wins++;
+    const mode = gameStats.byDifficulty[currentDifficulty];
+    mode.wins++;
+    mode.bestTime = mode.bestTime === null ? seconds : Math.min(mode.bestTime, seconds);
+    mode.minMoves = mode.minMoves === null ? moves : Math.min(mode.minMoves, moves);
+    saveGameStats();
+  }
+
+  function startGameTimer() {
+    stopGameTimer();
+    if (!hasStartedGame || isPaused || currentGameFinished) return;
+    timer = setInterval(() => {
+      seconds++;
+      updateStats();
+    }, 1000);
+  }
+
+  function stopGameTimer() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
 
   function emptyDailyProgress() {
     return {version:1, days:{}, trophies:{}};
@@ -1849,6 +2518,9 @@
   }
 
   let dailyProgress = loadDailyProgress();
+  let gameSlots = loadGameSlots();
+  let gameSettings = loadGameSettings();
+  let gameStats = loadGameStats();
 
   function saveDailyProgress() {
     try {
@@ -2465,6 +3137,8 @@
     flipAnimationIds.clear();
     lastCompletedSlot = -1;
     hasStartedGame = true;
+    isPaused = false;
+    currentGameFinished = false;
     el.win.classList.remove('show');
 
     const targets = [6,6,6,6,5,5,5,5,5,5];
@@ -2476,11 +3150,8 @@
     }
     stock = deck;
 
-    clearInterval(timer);
-    timer = setInterval(() => {
-      seconds++;
-      updateStats();
-    }, 1000);
+    if (!options.skipStats) recordGameStart();
+    startGameTimer();
 
     render();
     persist();
@@ -2577,6 +3248,7 @@
         lastCompletedSlot = completed - 1;
         markTopCardForFlip(tableau[col]);
         showToast('Серия собрана ♡');
+        playSound('complete');
         run = getCompleteRun(col);
       }
     }
@@ -2585,7 +3257,7 @@
   }
 
   function moveSequence(fromCol, index, toCol) {
-    if (isAnimating) return false;
+    if (isAnimating || isPaused) return false;
     if (!canMoveTo(fromCol, index, toCol)) {
       showToast('Сюда эту серию положить нельзя');
       return false;
@@ -2599,6 +3271,7 @@
 
     moves++;
     selected = null;
+    playSound('move');
 
     const won = checkCompleted([toCol]);
     render();
@@ -2609,7 +3282,7 @@
   }
 
   function dealRow() {
-    if (isAnimating) return;
+    if (isAnimating || isPaused) return;
     if (stock.length < 10) {
       showToast('Больше раздач нет');
       return;
@@ -2629,6 +3302,7 @@
     }
 
     moves++;
+    playSound('deal');
 
     const won = checkCompleted([...Array(10).keys()]);
     render();
@@ -2637,9 +3311,21 @@
     if (won) winGame();
   }
 
+  function quickMove(col, index) {
+    if (isAnimating || isPaused || !canPickSequence(col, index)) return;
+    const best = smartHintCandidates().find(candidate => (
+      candidate.from === col && candidate.index === index
+    ));
+    if (!best) {
+      showToast('Для этой карты нет быстрого хода');
+      return;
+    }
+    moveSequence(col, index, best.to);
+  }
+
   function onCardClick(col, index, event) {
     event.stopPropagation();
-    if (isAnimating) return;
+    if (isAnimating || isPaused) return;
     const card = tableau[col][index];
     if (!card.faceUp) return;
 
@@ -2661,34 +3347,136 @@
   }
 
   function onColumnClick(col) {
-    if (isAnimating) return;
+    if (isAnimating || isPaused) return;
     if (selected) moveSequence(selected.col, selected.index, col);
   }
 
-  function findHint() {
-    if (isAnimating) return;
-    clearHint();
+  function moveWouldCompleteRun(fromCol, index, toCol) {
+    const target = [...tableau[toCol], ...tableau[fromCol].slice(index)];
+    if (target.length < 13) return false;
+
+    const run = target.slice(-13);
+    const suit = run[0].suit;
+
+    return run.every((card, position) => (
+      card.faceUp &&
+      card.suit === suit &&
+      card.rank === 13 - position
+    ));
+  }
+
+  function smartHintCandidates() {
+    const candidates = [];
+
     for (let from = 0; from < 10; from++) {
-      for (let index = 0; index < tableau[from].length; index++) {
+      const sourcePile = tableau[from];
+
+      for (let index = 0; index < sourcePile.length; index++) {
         if (!canPickSequence(from, index)) continue;
+
+        const moving = sourcePile[index];
+        const movedCount = sourcePile.length - index;
+        const cardBelow = index > 0 ? sourcePile[index - 1] : null;
+        const revealsFaceDown = Boolean(cardBelow && !cardBelow.faceUp);
+        const breaksSameSuitRun = Boolean(
+          cardBelow &&
+          cardBelow.faceUp &&
+          cardBelow.suit === moving.suit &&
+          cardBelow.rank === moving.rank + 1
+        );
+
         for (let to = 0; to < 10; to++) {
-          if (canMoveTo(from, index, to)) {
-            const cardEl = document.querySelector(`[data-col="${from}"][data-index="${index}"]`);
-            const colEl = document.querySelector(`.column[data-column="${to}"]`);
-            if (cardEl) cardEl.classList.add('hint');
-            if (colEl) colEl.classList.add('drop-ok');
-            hintTimeout = setTimeout(clearHint, 2200);
-            return;
+          if (!canMoveTo(from, index, to)) continue;
+
+          const destinationPile = tableau[to];
+          const target = destinationPile[destinationPile.length - 1] || null;
+          const sameSuit = Boolean(target && target.suit === moving.suit);
+          const emptyTarget = !target;
+          const completesRun = moveWouldCompleteRun(from, index, to);
+
+          let score = 0;
+          if (completesRun) score += 1200;
+          if (revealsFaceDown) score += 520;
+          if (sameSuit) score += 190;
+          score += Math.min(movedCount, 13) * 4;
+          if (breaksSameSuitRun) score -= 360;
+          if (emptyTarget && !revealsFaceDown) score -= 95;
+          if (emptyTarget && moving.rank === 13) score += 30;
+
+          let reason = 'Доступный ход';
+          if (completesRun) {
+            reason = 'Лучший ход: соберёт полную серию';
+          } else if (revealsFaceDown && sameSuit) {
+            reason = 'Лучший ход: откроет карту и продолжит масть';
+          } else if (revealsFaceDown) {
+            reason = 'Лучший ход: откроет закрытую карту';
+          } else if (sameSuit) {
+            reason = 'Лучший ход: продолжит серию одной масти';
+          } else if (emptyTarget) {
+            reason = 'Можно перенести серию в пустой столбец';
           }
+
+          candidates.push({
+            from,
+            index,
+            to,
+            score,
+            movedCount,
+            reason
+          });
         }
       }
     }
-    if (stock.length) showToast('Полезных ходов не видно — можно раздать новый ряд');
-    else showToast('Ходов не видно');
+
+    return candidates.sort((a, b) => (
+      b.score - a.score ||
+      b.movedCount - a.movedCount ||
+      a.from - b.from ||
+      a.to - b.to
+    ));
+  }
+
+  function findHint() {
+    if (isAnimating || isPaused) return;
+    clearHint();
+
+    const best = smartHintCandidates()[0];
+
+    if (best) {
+      document.querySelectorAll(`.card[data-col="${best.from}"]`).forEach(card => {
+        if (Number(card.dataset.index) >= best.index) {
+          card.classList.add('hint');
+        }
+      });
+
+      const destination = document.querySelector(
+        `.column[data-column="${best.to}"]`
+      );
+      if (destination) destination.classList.add('drop-ok');
+
+      showToast(best.reason);
+      hintTimeout = setTimeout(clearHint, 2600);
+      return;
+    }
+
+    if (stock.length && tableau.every(pile => pile.length > 0)) {
+      el.stockBtn.classList.add('hint-stock');
+      showToast('Полезных ходов нет — лучше раздать новый ряд');
+      hintTimeout = setTimeout(clearHint, 2600);
+      return;
+    }
+
+    if (stock.length) {
+      showToast('Заполни пустой столбец, чтобы раздать новый ряд');
+    } else {
+      showToast('Доступных ходов не найдено');
+    }
   }
 
   function clearHint() {
-    document.querySelectorAll('.hint,.drop-ok').forEach(x => x.classList.remove('hint','drop-ok'));
+    document.querySelectorAll('.hint,.drop-ok,.hint-stock').forEach(element => {
+      element.classList.remove('hint','drop-ok','hint-stock');
+    });
     if (hintTimeout) clearTimeout(hintTimeout);
   }
 
@@ -2899,7 +3687,11 @@
   }
 
   function winGame() {
-    clearInterval(timer);
+    if (currentGameFinished) return;
+    currentGameFinished = true;
+    stopGameTimer();
+    recordGameWinStats();
+    playSound('win');
     clearDragPreview();
     lastAwardedTrophyKey = recordDailyVictory();
     localStorage.removeItem('miyeonSpiderSave');
@@ -2920,7 +3712,7 @@
       el.monthlyTrophyNotice.classList.remove('show');
     }
 
-    if (reduceMotion) {
+    if (reduceMotion || !gameSettings.victoryAnimation) {
       el.winText.textContent =
         `Все 8 серий собраны за ${moves} ходов и ${formatTime(seconds)} ♡`;
       el.win.classList.add('show');
@@ -3104,6 +3896,11 @@
             <div class="corner bottom ${suit.cls}">${rank}<span class="suit">${suit.symbol}</span></div>
           `;
           cardEl.addEventListener('click', e => onCardClick(colIndex, index, e));
+          cardEl.addEventListener('dblclick', e => {
+            e.preventDefault();
+            e.stopPropagation();
+            quickMove(colIndex, index);
+          });
 
           if (!isAnimating && canPickSequence(colIndex, index)) {
             cardEl.draggable = true;
@@ -3212,6 +4009,10 @@
     el.autoComplete.title = available
       ? 'Завершить открытую концовку'
       : 'Сначала открой все карты и закончи колоду';
+    el.autoCompleteNotice.hidden = !available;
+
+    el.restartGame.disabled = !hasStartedGame;
+    el.pauseMenu.disabled = !hasStartedGame || currentGameFinished;
   }
 
   function autoCompleteGame() {
@@ -3233,7 +4034,7 @@
   function updateStats() {
     el.moves.textContent = moves;
     el.time.textContent = formatTime(seconds);
-    el.sets.textContent = `${completed} / 8`;
+    if (el.sets) el.sets.textContent = `${completed} / 8`;
     updateActionButtons();
   }
 
@@ -3251,6 +4052,377 @@
     toastTimer = setTimeout(() => el.toast.classList.remove('show'), 2100);
   }
 
+
+  function gameKindLabel(kind = currentGameKind) {
+    if (kind === 'daily') return 'Ежедневная раскладка';
+    if (kind === 'code') return 'Раскладка по коду';
+    return 'Обычная партия';
+  }
+
+  function createCurrentGameState() {
+    return {
+      tableau:JSON.parse(JSON.stringify(tableau)),
+      stock:JSON.parse(JSON.stringify(stock)),
+      completed,
+      moves,
+      seconds,
+      difficulty:currentDifficulty,
+      seed:currentSeed >>> 0,
+      dealCode:currentDealCode,
+      gameKind:currentGameKind,
+      dailyDateKey:currentDailyDateKey,
+      savedAt:new Date().toISOString()
+    };
+  }
+
+  function sanitizeSavedGame(value) {
+    if (!value || typeof value !== 'object') return null;
+    if (!Array.isArray(value.tableau) || value.tableau.length !== 10) return null;
+
+    return {
+      tableau:value.tableau,
+      stock:Array.isArray(value.stock) ? value.stock : [],
+      completed:Number.isFinite(value.completed) ? value.completed : 0,
+      moves:Number.isFinite(value.moves) ? value.moves : 0,
+      seconds:Number.isFinite(value.seconds) ? value.seconds : 0,
+      difficulty:['easy','medium','hard'].includes(value.difficulty)
+        ? value.difficulty
+        : 'medium',
+      seed:Number.isInteger(value.seed) ? value.seed >>> 0 : makeRandomSeed(),
+      dealCode:String(value.dealCode || ''),
+      gameKind:['random','daily','code'].includes(value.gameKind)
+        ? value.gameKind
+        : 'random',
+      dailyDateKey:String(value.dailyDateKey || ''),
+      savedAt:String(value.savedAt || new Date().toISOString())
+    };
+  }
+
+  function loadGameSlots() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(GAME_SLOTS_KEY) || '[]');
+      return Array.from({length:GAME_SLOT_COUNT}, (_, index) => (
+        sanitizeSavedGame(stored[index])
+      ));
+    } catch {
+      return Array.from({length:GAME_SLOT_COUNT}, () => null);
+    }
+  }
+
+  function saveGameSlots() {
+    try {
+      localStorage.setItem(GAME_SLOTS_KEY, JSON.stringify(gameSlots));
+    } catch {
+      showToast('Не удалось сохранить слот в браузере');
+    }
+  }
+
+  function savedDateLabel(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return 'Дата сохранения неизвестна';
+
+    return `Сохранено ${date.toLocaleString('ru-RU', {
+      day:'numeric',
+      month:'long',
+      hour:'2-digit',
+      minute:'2-digit'
+    })}`;
+  }
+
+  function renderSavedGames() {
+    el.savedGamesGrid.innerHTML = '';
+
+    gameSlots.forEach((state, index) => {
+      const slot = document.createElement('section');
+      slot.className = `save-slot${state ? '' : ' empty'}`;
+
+      if (!state) {
+        slot.innerHTML = `
+          <span class="save-slot-number">Слот ${index + 1}</span>
+          <div class="save-empty-text">Здесь пока нет сохранённой партии.</div>
+          <div class="save-slot-actions">
+            <button class="btn primary" type="button" data-save-slot="${index}">
+              Сохранить текущую
+            </button>
+          </div>
+        `;
+      } else {
+        const dailyLabel = state.dailyDateKey
+          ? `<br>${dateLabel(state.dailyDateKey)}`
+          : '';
+
+        slot.innerHTML = `
+          <span class="save-slot-number">Слот ${index + 1}</span>
+          <h3>${difficultyName(state.difficulty)}</h3>
+          <div class="save-slot-kind">
+            ${gameKindLabel(state.gameKind)}${dailyLabel}
+          </div>
+
+          <div class="save-slot-stats">
+            <div class="save-stat">
+              <b>${formatTime(state.seconds)}</b>
+              <span>время</span>
+            </div>
+            <div class="save-stat">
+              <b>${state.moves}</b>
+              <span>ходы</span>
+            </div>
+            <div class="save-stat">
+              <b>${state.completed} / 8</b>
+              <span>серии</span>
+            </div>
+            <div class="save-stat">
+              <b>${Math.floor(state.stock.length / 10)}</b>
+              <span>раздачи</span>
+            </div>
+          </div>
+
+          <div class="save-slot-date">${savedDateLabel(state.savedAt)}</div>
+
+          <div class="save-slot-actions">
+            <button class="btn primary" type="button" data-load-slot="${index}">
+              Продолжить
+            </button>
+            <button class="btn" type="button" data-save-slot="${index}">
+              Перезаписать
+            </button>
+            <button class="btn danger" type="button" data-delete-slot="${index}" aria-label="Удалить слот">
+              ×
+            </button>
+          </div>
+        `;
+      }
+
+      el.savedGamesGrid.appendChild(slot);
+    });
+
+    el.savedGamesGrid.querySelectorAll('[data-save-slot]').forEach(button => {
+      button.addEventListener('click', () => saveCurrentGameToSlot(
+        Number(button.dataset.saveSlot)
+      ));
+    });
+
+    el.savedGamesGrid.querySelectorAll('[data-load-slot]').forEach(button => {
+      button.addEventListener('click', () => loadGameFromSlot(
+        Number(button.dataset.loadSlot)
+      ));
+    });
+
+    el.savedGamesGrid.querySelectorAll('[data-delete-slot]').forEach(button => {
+      button.addEventListener('click', () => deleteGameSlot(
+        Number(button.dataset.deleteSlot)
+      ));
+    });
+  }
+
+  function openSavedGames() {
+    renderSavedGames();
+    el.savedGamesModal.classList.add('show');
+  }
+
+  function closeSavedGames() {
+    el.savedGamesModal.classList.remove('show');
+  }
+
+  function saveCurrentGameToSlot(index) {
+    if (!hasStartedGame) {
+      showToast('Сначала начни игру');
+      return;
+    }
+
+    if (gameSlots[index] && !window.confirm(
+      `Перезаписать сохранение в слоте ${index + 1}?`
+    )) {
+      return;
+    }
+
+    gameSlots[index] = createCurrentGameState();
+    saveGameSlots();
+    renderSavedGames();
+    showToast(`Партия сохранена в слот ${index + 1}`);
+  }
+
+  function applySavedGame(state) {
+    const clean = sanitizeSavedGame(
+      JSON.parse(JSON.stringify(state))
+    );
+    if (!clean) {
+      showToast('Сохранённая партия повреждена');
+      return;
+    }
+
+    persist();
+    stopGameTimer();
+    stopVictoryAnimation();
+    clearDragPreview();
+    clearHint();
+
+    tableau = clean.tableau;
+    stock = clean.stock;
+    completed = clean.completed;
+    moves = clean.moves;
+    seconds = clean.seconds;
+    currentDifficulty = clean.difficulty;
+    currentSeed = clean.seed;
+    currentDealCode = clean.dealCode || formatRandomDealCode(
+      currentDifficulty,
+      currentSeed
+    );
+    currentGameKind = clean.gameKind;
+    currentDailyDateKey = clean.dailyDateKey || (
+      currentGameKind === 'daily'
+        ? parseDealCode(currentDealCode)?.dateKey || ''
+        : ''
+    );
+
+    selected = null;
+    undoStack = [];
+    isAnimating = false;
+    pendingStockOrigin = null;
+    dealtAnimationIds.clear();
+    flipAnimationIds.clear();
+    lastCompletedSlot = -1;
+    hasStartedGame = true;
+    isPaused = false;
+    currentGameFinished = false;
+
+    localStorage.setItem('miyeonSpiderDifficulty', currentDifficulty);
+    el.win.classList.remove('show');
+    closeSavedGames();
+    updateDifficultyUI();
+
+    startGameTimer();
+
+    render();
+    persist();
+    showToast('Сохранённая партия открыта');
+  }
+
+  function loadGameFromSlot(index) {
+    const state = gameSlots[index];
+    if (!state) return;
+    applySavedGame(state);
+  }
+
+  function deleteGameSlot(index) {
+    if (!gameSlots[index]) return;
+    if (!window.confirm(`Удалить сохранение из слота ${index + 1}?`)) return;
+
+    gameSlots[index] = null;
+    saveGameSlots();
+    renderSavedGames();
+    showToast(`Слот ${index + 1} очищен`);
+  }
+
+  function restartCurrentGame() {
+    if (!hasStartedGame) {
+      showToast('Сначала начни игру');
+      return;
+    }
+
+    if (gameSettings.confirmRestart && !window.confirm(
+      'Перезапустить текущую раскладку? Все ходы в ней будут сброшены.'
+    )) {
+      return;
+    }
+
+    const restartOptions = {
+      gameKind:currentGameKind,
+      seed:currentSeed,
+      code:currentDealCode,
+      dateKey:currentDailyDateKey,
+      skipStats:true
+    };
+
+    startNewGame(currentDifficulty, restartOptions);
+    showToast('Раскладка перезапущена');
+  }
+
+  function closeMoreMenu() {
+    el.moreMenu.classList.remove('show');
+    el.moreMenuBtn.setAttribute('aria-expanded','false');
+  }
+
+  function toggleMoreMenu() {
+    const open = !el.moreMenu.classList.contains('show');
+    closeMoreMenu();
+    if (open) {
+      el.moreMenu.classList.add('show');
+      el.moreMenuBtn.setAttribute('aria-expanded','true');
+    }
+  }
+
+  function openPause() {
+    if (!hasStartedGame || currentGameFinished) {
+      showToast('Сначала начни игру');
+      return;
+    }
+    closeMoreMenu();
+    isPaused = true;
+    stopGameTimer();
+    selected = null;
+    updateSelectionUI();
+    el.pauseTime.textContent = formatTime(seconds);
+    el.pauseModal.classList.add('show');
+  }
+
+  function resumeGame() {
+    el.pauseModal.classList.remove('show');
+    if (!isPaused) return;
+    isPaused = false;
+    startGameTimer();
+  }
+
+  function openSettings() {
+    closeMoreMenu();
+    applyGameSettings(false);
+    el.settingsModal.classList.add('show');
+  }
+
+  function closeSettings() {
+    el.settingsModal.classList.remove('show');
+  }
+
+  function updateSetting(name, value) {
+    gameSettings[name] = value;
+    saveGameSettings();
+    applyGameSettings();
+  }
+
+  function openStatistics() {
+    closeMoreMenu();
+    renderStatistics();
+    el.statisticsModal.classList.add('show');
+  }
+
+  function closeStatistics() {
+    el.statisticsModal.classList.remove('show');
+  }
+
+  function renderStatistics() {
+    const completedDailies = Object.keys(dailyProgress.days || {}).length;
+    el.statGames.textContent = gameStats.started;
+    el.statWins.textContent = gameStats.wins;
+    el.statWinRate.textContent = gameStats.started
+      ? `${Math.round(gameStats.wins / gameStats.started * 100)}%`
+      : '0%';
+    el.statDailies.textContent = completedDailies;
+    el.difficultyStats.innerHTML = '';
+
+    for (const difficulty of ['easy','medium','hard']) {
+      const stats = gameStats.byDifficulty[difficulty];
+      const card = document.createElement('section');
+      card.className = 'difficulty-stat-card';
+      card.innerHTML = `
+        <h3>${difficultyName(difficulty)}</h3>
+        <div class="difficulty-stat-line"><span>Партий</span><b>${stats.started}</b></div>
+        <div class="difficulty-stat-line"><span>Побед</span><b>${stats.wins}</b></div>
+        <div class="difficulty-stat-line"><span>Лучшее время</span><b>${stats.bestTime === null ? '—' : formatTime(stats.bestTime)}</b></div>
+        <div class="difficulty-stat-line"><span>Минимум ходов</span><b>${stats.minMoves === null ? '—' : stats.minMoves}</b></div>
+      `;
+      el.difficultyStats.appendChild(card);
+    }
+  }
 
   function openDealCodeModal() {
     updateDifficultyUI();
@@ -3358,10 +4530,9 @@
 
       hasStartedGame = true;
       updateDifficultyUI();
-      timer = setInterval(() => {
-        seconds++;
-        updateStats();
-      }, 1000);
+      isPaused = false;
+      currentGameFinished = false;
+      startGameTimer();
       render();
       return true;
     } catch {
@@ -3375,9 +4546,55 @@
   );
 
   el.dailyGame.addEventListener('click', openDailyCalendar);
+  el.moreMenuBtn.addEventListener('click', event => {
+    event.stopPropagation();
+    toggleMoreMenu();
+  });
+  document.addEventListener('click', event => {
+    if (!el.moreWrap.contains(event.target)) closeMoreMenu();
+  });
+  el.moreMenu.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', closeMoreMenu);
+  });
+
+  el.pauseMenu.addEventListener('click', openPause);
+  el.timePill.addEventListener('click', openPause);
+  el.resumeGame.addEventListener('click', resumeGame);
+
+  el.settings.addEventListener('click', openSettings);
+  el.closeSettings.addEventListener('click', closeSettings);
+  el.settingsModal.addEventListener('click', event => {
+    if (event.target === el.settingsModal) closeSettings();
+  });
+  el.settingSounds.addEventListener('change', () => updateSetting('sounds', el.settingSounds.checked));
+  el.settingVictoryAnimation.addEventListener('change', () => updateSetting('victoryAnimation', el.settingVictoryAnimation.checked));
+  el.settingConfirmRestart.addEventListener('change', () => updateSetting('confirmRestart', el.settingConfirmRestart.checked));
+  el.settingLargeCards.addEventListener('change', () => updateSetting('largeCards', el.settingLargeCards.checked));
+  el.settingLargeSuits.addEventListener('change', () => updateSetting('largeSuits', el.settingLargeSuits.checked));
+  el.settingCardBack.addEventListener('change', () => updateSetting('cardBack', el.settingCardBack.value));
+  el.resetSettings.addEventListener('click', () => {
+    gameSettings = defaultGameSettings();
+    saveGameSettings();
+    applyGameSettings();
+    showToast('Настройки сброшены');
+  });
+
+  el.statistics.addEventListener('click', openStatistics);
+  el.closeStatistics.addEventListener('click', closeStatistics);
+  el.statisticsModal.addEventListener('click', event => {
+    if (event.target === el.statisticsModal) closeStatistics();
+  });
+
+  el.restartGame.addEventListener('click', restartCurrentGame);
+  el.savedGames.addEventListener('click', openSavedGames);
+  el.closeSavedGames.addEventListener('click', closeSavedGames);
+  el.savedGamesModal.addEventListener('click', event => {
+    if (event.target === el.savedGamesModal) closeSavedGames();
+  });
 
   el.dealCode.addEventListener('click', openDealCodeModal);
   el.autoComplete.addEventListener('click', autoCompleteGame);
+  el.autoCompleteNoticeBtn.addEventListener('click', autoCompleteGame);
   document.getElementById('playAgainBtn').addEventListener('click', () => {
     if (currentGameKind === 'daily' || currentGameKind === 'code') {
       startNewGame(currentDifficulty, {
@@ -3440,6 +4657,14 @@
   document.getElementById('closeHelpBtn').addEventListener('click', () => el.help.classList.remove('show'));
   el.help.addEventListener('click', e => {
     if (e.target === el.help) el.help.classList.remove('show');
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    if (el.moreMenu.classList.contains('show')) closeMoreMenu();
+    else if (el.settingsModal.classList.contains('show')) closeSettings();
+    else if (el.statisticsModal.classList.contains('show')) closeStatistics();
+    else if (el.pauseModal.classList.contains('show')) resumeGame();
   });
 
   window.addEventListener('resize', () => render());
